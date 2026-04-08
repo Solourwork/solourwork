@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="如何启动你的一人公司？四步实战方法论：从认知觉醒到最小闭环。">
+    <title>How - 如何启动你的 OPC | Solourwork</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            min-height: 70px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-cta {
+            display: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            border: 2px solid var(--primary-orange);
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--tech-blue) 100%);
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Steps Timeline */
+        .timeline-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-orange), var(--tech-blue));
+            border-radius: 2px;
+        }
+
+        .step-card {
+            display: flex;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .step-card:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .step-content {
+            width: 45%;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .step-content h3 {
+            font-size: 2rem;
+            color: var(--tech-blue);
+            margin-bottom: 1rem;
+        }
+
+        .step-content .subtitle {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-content ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .step-content li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #4B5563;
+        }
+
+        .step-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--mint-green);
+            font-weight: 700;
+        }
+
+        /* Methodology Grid */
+        .methodology-section {
+            padding: 6rem 5%;
+            background: var(--light-gray);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .method-card {
+            background: white;
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .method-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .method-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .method-card h4 {
+            font-size: 1.1rem;
+            color: var(--tech-blue);
+            margin-bottom: 0.6rem;
+        }
+
+        .method-card p {
+            color: #6B7280;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: #F9FAFB;
+            border-radius: 12px;
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .tool-info h5 {
+            font-size: 1.2rem;
+            color: var(--tech-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-info p {
+            color: #6B7280;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--mint-green), var(--sunshine-yellow));
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .btn-white-large {
+            background: white;
+            color: var(--tech-blue);
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-white-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 {
+                font-size: 2.5rem;
+            
+            .methodology-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+        }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .step-card,
+            .step-card:nth-child(odd) {
+                flex-direction: column;
+                padding-left: 80px;
+            }
+            
+            .step-content {
+                width: 100%;
+            }
+            
+            .step-number {
+                left: 30px;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            }
+    
+        @media (max-width: 480px) {
+            nav { padding: 1rem 3%; flex-wrap: wrap; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            .logo { position: static; width: 100%; justify-content: center; }
+            .logo-img { height: 40px; }
+            .cta-button { display: none; }
+            .mobile-menu-btn { display: block !important; position: fixed; right: 3%; top: 0.8rem; font-size: 1.8rem; cursor: pointer; z-index: 1002; background: rgba(255,255,255,0.9); border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; color: #333; }
+            .mobile-cta { display: block; width: 100%; text-align: center; background: var(--primary-orange); color: white; padding: 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem; }
+            .nav-links { display: none; flex-direction: column; width: 100%; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0; }
+            .nav-links.mobile-open { display: flex; }
+            .hero, .page-hero { padding: 6rem 5% 2rem; }
+            .portal-grid, .values-grid, .templates-grid, .trends-grid, .methodology-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+        <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html">为什么现在</a></li>
+            <li><a href="solourwork_how.html" style="color: var(--primary-orange);">如何开始</a></li>
+            <li><a href="solourwork_resources.html">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>How to Start Your OPC</h1>
+        <p>四步实战方法论 · 从零到一建立一人公司<br/>基于《做好一人公司》完整理论框架</p>
+    </section>
+
+    <!-- 4 Steps Timeline -->
+    <section class="timeline-section">
+        <div class="timeline">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>认知觉醒</h3>
+                    <p class="subtitle">打破思维枷锁，重新定义工作</p>
+                    <p>在开始之前，先问自己三个问题：</p>
+                    <ul>
+                        <li>我是否愿意为自己的选择负全责？</li>
+                        <li>我是否能接受前 6 个月可能没有稳定收入？</li>
+                        <li>我是否有持续学习和自我驱动的能力？</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; color: #6B7280;">如果答案都是 YES，你已经具备了 OPC 创始人的基本心态。</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>技能盘点与定位</h3>
+                    <p class="subtitle">找到你的甜蜜点：擅长 × 喜欢 × 能赚钱</p>
+                    <p>使用"苹果核模型"进行自我梳理：</p>
+                    <ul>
+                        <li><strong>核心层：</strong>你的专业技能是什么？（如：销售培训、UI 设计、编程）</li>
+                        <li><strong>中间层：</strong>你的可迁移能力是什么？（如：沟通、项目管理、写作）</li>
+                        <li><strong>外层：</strong>市场愿意为什么付费？（验证需求真实性）</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;"><strong>产出物：</strong>一句话定位 —— "我帮助 [目标客户] 通过 [方法/产品] 实现 [结果]"</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>最小闭环验证</h3>
+                    <p class="subtitle">用 MVP 快速测试市场反应</p>
+                    <p>不要等产品完美再上线，先做出"够用"的版本：</p>
+                    <ul>
+                        <li><strong>服务型 MVP：</strong>接 1-3 个付费客户，验证交付能力</li>
+                        <li><strong>产品型 MVP：</strong>制作简易版课程/模板，测试购买意愿</li>
+                        <li><strong>定价策略：</strong>早期可以低价换反馈，但不要免费</li>
+                        <li><strong>关键指标：</strong>第一个月目标：1-3 个客户，收入¥3000-10000</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>规模化决策</h3>
+                    <p class="subtitle">选择你的增长路径</p>
+                    <p>验证成功后，面临两条路：</p>
+                    <ul>
+                        <li><strong>路径 A：小而美（Lifestyle Business）</strong><br/>年收入 50-150 万，保持个人节奏，时间自由优先</li>
+                        <li><strong>路径 B：产品化规模化（Startup Mode）</strong><br/>年收入 300 万+，需要团队和系统，牺牲部分自由度</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; color: #6B7280;">没有对错，只有适合。关键是清醒地选择，并为选择负责。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Methodologies -->
+    <section class="methodology-section">
+        <h2 class="section-title">四大核心方法论</h2>
+        <p class="section-subtitle">贯穿整个 OPC 旅程的底层思维</p>
+        
+        <div class="methodology-grid">
+            <div class="method-card">
+                <span class="method-icon">🎯</span>
+                <h4>商业模式画布</h4>
+                <p>9 宫格工具，帮你系统化思考：价值主张、客户关系、渠道通路、收入来源、核心资源、关键业务、重要合作、成本结构。</p>
+            </div>
+            
+            <div class="method-card">
+                <span class="method-icon">🍎</span>
+                <h4>苹果核模型</h4>
+                <p>三层同心圆结构，从内到外梳理：核心技能 → 可迁移能力 → 市场需求。找到三者的交集，就是你的最佳定位。</p>
+            </div>
+            
+            <div class="method-card">
+                <span class="method-icon">📈</span>
+                <h4>私域运营飞轮</h4>
+                <p>内容获客 → 沉淀私域 → 信任培育 → 转化成交 → 口碑传播。打造可持续的客户获取和转化系统。</p>
+            </div>
+            
+            <div class="method-card">
+                <span class="method-icon">🔄</span>
+                <h4>MVP 迭代思维</h4>
+                <p>完成比完美重要。快速推出最小可行产品，收集真实反馈，小步快跑迭代。避免闭门造车和资源浪费。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Essential Tools -->
+    <section class="tools-section">
+        <h2 class="section-title">必备工具栈</h2>
+        <p class="section-subtitle">工欲善其事，必先利其器</p>
+        
+        <div class="tools-grid">
+            <div class="tool-item">
+                <span class="tool-icon">📝</span>
+                <div class="tool-info">
+                    <h5>内容创作</h5>
+                    <p>小红书 / 抖音 / 公众号 / B 站 / 视频号</p>
+                </div>
+            </div>
+            
+            <div class="tool-item">
+                <span class="tool-icon">💬</span>
+                <div class="tool-info">
+                    <h5>客户沟通</h5>
+                    <p>企业微信 / 飞书 / 钉钉 / 腾讯会议</p>
+                </div>
+            </div>
+            
+            <div class="tool-item">
+                <span class="tool-icon">🎨</span>
+                <div class="tool-info">
+                    <h5>设计工具</h5>
+                    <p>可画（Canva 中国）/ 稿定设计 / 创客贴</p>
+                </div>
+            </div>
+            
+            <div class="tool-item">
+                <span class="tool-icon">💰</span>
+                <div class="tool-info">
+                    <h5>收款支付</h5>
+                    <p>支付宝 / 微信支付 / Stripe（海外客户）</p>
+                </div>
+            </div>
+            
+            <div class="tool-item">
+                <span class="tool-icon">📊</span>
+                <div class="tool-info">
+                    <h5>项目管理</h5>
+                    <p>飞书多维表格 / 钉钉宜搭 / Notion / Trello</p>
+                </div>
+            </div>
+            
+            <div class="tool-item">
+                <span class="tool-icon">🤖</span>
+                <div class="tool-info">
+                    <h5>AI 提效</h5>
+                    <p>通义千问 / Kimi / 文心一言 / Cursor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>需要更详细的指导？</h2>
+        <p>领取《做好一人公司》配套工具模板包<br/>包含商业模式画布、苹果核模型、私域运营指南等 9 大工具</p>
+        <a href="solourwork_resources.html" class="btn-white-large">获取免费模板 →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="solourwork_about.html">关于我们</a>
+            <a href="solourwork_blog.html">博客</a>
+            <a href="solourwork_podcast.html">播客</a>
+            <a href="solourwork_contact.html">联系我们</a>
+            <a href="solourwork_privacy.html">隐私政策</a>
+            <a href="solourwork_terms.html">服务条款</a>
+        </div>
+        <p class="copyright">© 2026 Solourwork. All rights reserved. 一人无限可能.</p>
+    </footer>
+
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById("navLinks").classList.toggle("mobile-open");
+    }
+    </script>
+</body>
+</html>

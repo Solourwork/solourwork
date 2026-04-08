@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="为什么现在是启动一人公司的最佳时机？AI 技术、平台基建、观念转变、经济环境四大趋势分析。">
+    <title>Why Now - 为什么是现在 | Solourwork</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            min-height: 70px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-cta {
+            display: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            border: 2px solid var(--primary-orange);
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--tech-blue) 100%);
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Perfect Storm Section */
+        .storm-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+        }
+
+        .storm-intro {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--dark-gray);
+            line-height: 1.8;
+        }
+
+        /* Four Trends Grid */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trend-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .trend-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .trend-header {
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .trend-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .trend-card h3 {
+            font-size: 1.8rem;
+            color: var(--tech-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .trend-tagline {
+            background: linear-gradient(135deg, #FFD166, #FF6B35, #00C9A7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .trend-html {
+            overflow-x: hidden;
+        }
+
+        body {
+            padding: 0 2rem 2rem;
+        }
+
+        .trend-body p {
+            color: #4B5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .trend-stats {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .trend-stat-item {
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .trend-stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .trend-stat-label {
+            color: #6B7280;
+        }
+
+        .trend-stat-value {
+            font-weight: 700;
+            color: var(--tech-blue);
+        }
+
+        /* Opportunity Timeline */
+        .opportunity-section {
+            padding: 6rem 5%;
+            background: var(--light-gray);
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .timeline-year {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.5rem;
+            color: var(--tech-blue);
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-content p {
+            color: #4B5563;
+            line-height: 1.8;
+        }
+
+        /* Urgency Box */
+        .urgency-box {
+            background: linear-gradient(135deg, var(--sunshine-yellow), var(--primary-orange));
+            padding: 4rem 5%;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .urgency-box h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .urgency-box p {
+            font-size: 1.3rem;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--mint-green), var(--sunshine-yellow));
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .btn-white-large {
+            background: white;
+            color: var(--tech-blue);
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-white-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            }
+    
+        @media (max-width: 480px) {
+            nav { padding: 1rem 3%; flex-wrap: wrap; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            .logo { position: static; width: 100%; justify-content: center; }
+            .logo-img { height: 40px; }
+            .cta-button { display: none; }
+            .mobile-menu-btn { display: block !important; position: fixed; right: 3%; top: 0.8rem; font-size: 1.8rem; cursor: pointer; z-index: 1002; background: rgba(255,255,255,0.9); border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; color: #333; }
+            .mobile-cta { display: block; width: 100%; text-align: center; background: var(--primary-orange); color: white; padding: 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem; }
+            .nav-links { display: none; flex-direction: column; width: 100%; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0; }
+            .nav-links.mobile-open { display: flex; }
+            .hero, .page-hero { padding: 6rem 5% 2rem; }
+            .portal-grid, .values-grid, .templates-grid, .trends-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+        <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html" style="color: var(--primary-orange);">为什么现在</a></li>
+            <li><a href="solourwork_how.html">如何开始</a></li>
+            <li><a href="solourwork_resources.html">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>Why Now?</h1>
+        <p>完美风暴已经形成 · 一人公司的黄金时代已来<br/>这不是偶然，而是技术、平台、观念、经济四重趋势的必然</p>
+    </section>
+
+    <!-- Perfect Storm Intro -->
+    <section class="storm-section">
+        <p class="storm-intro">
+            历史上从未有过这样一个时代：<br/>
+            <strong>一个人可以拥有十人团队的战斗力，服务全球客户，创造百万级收入。</strong><br/>
+            这不是梦想，而是正在发生的现实。
+        </p>
+
+        <div class="trends-grid">
+            <!-- Trend 1: AI -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">🤖</span>
+                    <h3>AI Leverage</h3>
+                    <p class="trend-tagline">一人 = 十人团队</p>
+                </div>
+                <div class="trend-body">
+                    <p>生成式 AI 的出现，彻底改变了个人生产力的上限。写作、设计、编程、视频剪辑、数据分析——过去需要专业团队的工作，现在一个人 + AI 就能完成。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">效率提升</span>
+                            <span class="trend-stat-value">3.7 倍</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">成本降低</span>
+                            <span class="trend-stat-value">60%</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">采用 AI 的 OPC 占比</span>
+                            <span class="trend-stat-value">78%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend 2: Platforms -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">🌐</span>
+                    <h3>Platform Maturity</h3>
+                    <p class="trend-tagline">基础设施完善</p>
+                </div>
+                <div class="trend-body">
+                    <p>获客、交付、收款、协作——所有一人公司需要的基础设施都已经成熟且低成本。你只需要专注核心价值创造，其他全部交给平台。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">获客平台</span>
+                            <span class="trend-stat-value">小红书/抖音/B 站</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">交付工具</span>
+                            <span class="trend-stat-value">小鹅通/飞书/腾讯会议</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">支付收款</span>
+                            <span class="trend-stat-value">支付宝/微信/Stripe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend 3: Mindset -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">💡</span>
+                    <h3>Mindset Shift</h3>
+                    <p class="trend-tagline">观念代际转变</p>
+                </div>
+                <div class="trend-body">
+                    <p>"斜杠青年"从贬义词变成褒义词，Z 世代不再迷信大厂光环，追求工作与生活的整合而非平衡。社会对多元职业选择的包容度达到历史最高点。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">Z 世代愿意尝试自由职业</span>
+                            <span class="trend-stat-value">73%</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">认为"稳定工作"最重要</span>
+                            <span class="trend-stat-value">仅 28%</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">支持子女做自由职业的家长</span>
+                            <span class="trend-stat-value">56%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend 4: Economy -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">📈</span>
+                    <h3>Economic Forces</h3>
+                    <p class="trend-tagline">推拉双重驱动</p>
+                </div>
+                <div class="trend-body">
+                    <p>推力：大厂裁员潮、35 岁危机、职场内耗加剧；拉力：灵活用工市场爆发、企业接受度提升、政策扶持个体经济。一推一拉，加速人才流动。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">中国灵活用工市场规模</span>
+                            <span class="trend-stat-value">¥1.5 万亿+</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">年增长率</span>
+                            <span class="trend-stat-value">25%+</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">2030 年预测占比</span>
+                            <span class="trend-stat-value">50%+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend 5: Policy Support -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">🏛️</span>
+                    <h3>Policy Support</h3>
+                    <p class="trend-tagline">OPC政策支持</p>
+                </div>
+                <div class="trend-body">
+                    <p>各地政府出台支持个体工商户、灵活就业人员的政策：税收优惠、社保补贴、创业扶持基金。一人公司正式成为国家鼓励的就业形态，政策红利持续释放。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">支持政策数量</span>
+                            <span class="trend-stat-value">200+</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">税收优惠幅度</span>
+                            <span class="trend-stat-value">50%</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">覆盖城市</span>
+                            <span class="trend-stat-value">全国</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend 6: Enablers -->
+            <div class="trend-card">
+                <div class="trend-header">
+                    <span class="trend-icon">🚀</span>
+                    <h3>More Enablers</h3>
+                    <p class="trend-tagline">更多赋能者</p>
+                </div>
+                <div class="trend-body">
+                    <p>Gumroad 创始人 Sahil Lavingia 把他的著名书籍「The Minimalist Entrepreneur」中的极简创业哲学封装为 9 个 Agent Skills 来给 OPC 从业者赋能。越来越多的成功 OPC 创业者将经验产品化，为后来者提供方法论、工具和社群支持。</p>
+                    <div class="trend-stats">
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">Agent Skills 数量</span>
+                            <span class="trend-stat-value">9 个</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">赋能工具增长</span>
+                            <span class="trend-stat-value">300%</span>
+                        </div>
+                        <div class="trend-stat-item">
+                            <span class="trend-stat-label">全球 OPC 社区</span>
+                            <span class="trend-stat-value">1000+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Context -->
+    <section class="opportunity-section">
+        <h2 class="section-title">历史性的窗口期</h2>
+        <p class="section-subtitle">回顾过去 20 年，看一人公司条件如何成熟</p>
+        
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-year">2005</div>
+                <div class="timeline-content">
+                    <h4>互联网初期</h4>
+                    <p>只有极少数技术人员能远程工作。没有移动支付，没有社交媒体，自由职业者接活靠熟人介绍，收款靠银行转账。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2015</div>
+                <div class="timeline-content">
+                    <h4>移动互联网时代</h4>
+                    <p>智能手机普及，微信成为基础设施。知识付费兴起（得到 APP 上线），但内容创作门槛仍高，需要专业设备和技术。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                    <h4>疫情催化</h4>
+                    <p>全民远程办公，线上协作成为常态。直播带货爆发，普通人也能通过手机创业。企业开始接受远程办公和灵活用工。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2026</div>
+                <div class="timeline-content">
+                    <h4>AI 赋能时代（当下）</h4>
+                    <p>生成式 AI 让个人生产力提升数倍。一人公司所需的所有条件全部具备：<strong>技术杠杆 + 平台基建 + 社会认知 + 市场环境</strong>。窗口期已开，稍纵即逝。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Message -->
+    <div class="urgency-box">
+        <h2>The Best Time to Start Was Yesterday</h2>
+        <p>The Second Best is NOW.<br/>等待"准备好了"再开始，是最大的幻觉。<br/>行动本身，就是最好的准备。</p>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>准备好抓住这个时代机遇了吗？</h2>
+        <p>从认知觉醒到最小闭环，我们陪你走完从 0 到 1 的全过程</p>
+        <a href="how.html" class="btn-white-large">查看启动方法 →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="solourwork_about.html">关于我们</a>
+            <a href="solourwork_blog.html">博客</a>
+            <a href="solourwork_podcast.html">播客</a>
+            <a href="solourwork_contact.html">联系我们</a>
+            <a href="solourwork_privacy.html">隐私政策</a>
+            <a href="solourwork_terms.html">服务条款</a>
+        </div>
+        <p class="copyright">© 2026 Solourwork. All rights reserved. 一人无限可能.</p>
+    </footer>
+
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById("navLinks").classList.toggle("mobile-open");
+    }
+    </script>
+</body>
+</html>

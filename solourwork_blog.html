@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客 - 一人公司实战经验与洞察 | Solourwork</title>
+    <meta name="description" content="深入探讨一人公司运营的方方面面：获客策略、定价技巧、产品化转型、个人品牌建设。真实案例 + 可执行建议。">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+        nav {
+            min-height: 70px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark-gray); font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-orange); }
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-cta {
+            display: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        .hero {
+            padding: 160px 5% 80px;
+            background: linear-gradient(135deg, #FFF5F0 0%, #F0F7FF 100%);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p { font-size: 1.25rem; color: #4B5563; max-width: 600px; margin: 0 auto; }
+        
+        section { padding: 80px 5%; }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        
+        .card-content { padding: 30px; }
+        .card-category {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .card-category.strategy { background: #DBEAFE; color: #2563EB; }
+        .card-category.growth { background: #D1FAE5; color: #059669; }
+        .card-category.tools { background: #F3E8FF; color: #7C3AED; }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-gray);
+        }
+        
+        .card-excerpt {
+            color: #6B7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.875rem;
+            color: #9CA3AF;
+        }
+        
+        .read-more {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .read-more:hover { gap: 10px; }
+        
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            color: white;
+            text-align: center;
+            padding: 80px 5%;
+        }
+        .newsletter-section h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .newsletter-section p { font-size: 1.25rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.95; }
+        .subscribe-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .subscribe-form input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .subscribe-form button {
+            background: white;
+            color: var(--primary-orange);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .subscribe-form button:hover { transform: scale(1.05); }
+        
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        .footer-section h4 { font-size: 1.125rem; margin-bottom: 20px; color: var(--sunshine-yellow); }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 12px; }
+        .footer-section a { color: #D1D5DB; text-decoration: none; transition: color 0.3s; }
+        .footer-section a:hover { color: white; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #374151;
+            color: #9CA3AF;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .subscribe-form { flex-direction: column; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            nav { padding: 1rem 3%; flex-wrap: wrap; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            .logo { position: static; width: 100%; justify-content: center; }
+            .logo-img { height: 40px; }
+            .cta-button { display: none; }
+            .mobile-menu-btn { display: block !important; position: fixed; right: 3%; top: 0.8rem; font-size: 1.8rem; cursor: pointer; z-index: 1002; background: rgba(255,255,255,0.9); border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; color: #333; }
+            .mobile-cta { display: block; width: 100%; text-align: center; background: var(--primary-orange); color: white; padding: 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem; }
+            .nav-links { display: none; flex-direction: column; width: 100%; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0; }
+            .nav-links.mobile-open { display: flex; }
+            .hero, .page-hero { padding: 6rem 5% 2rem; }
+            .portal-grid, .values-grid, .templates-grid, .trends-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html" style="color: var(--primary-orange);">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html">为什么现在</a></li>
+            <li><a href="solourwork_how.html">如何开始</a></li>
+            <li><a href="solourwork_resources.html">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+    <section class="hero">
+        <h1>📝 博客</h1>
+        <p>深度文章、实战指南、成功案例<br>每周更新，帮你从 0 到 1 建立一人公司</p>
+    </section>
+
+    <section>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <div class="card-image">🎯</div>
+                <div class="card-content">
+                    <span class="card-category strategy">定位策略</span>
+                    <h3 class="card-title">如何找到你的 OPC 定位？3 个步骤发现最赚钱的细分领域</h3>
+                    <p class="card-excerpt">不是所有技能都适合做一人公司。本文教你用"IKIGAI 模型"找到热情、能力、市场需求和收入的交汇点。</p>
+                    <div class="card-meta">
+                        <span>By 李骅 · 2024 年 3 月 28 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image" style="background: linear-gradient(135deg, var(--mint-green), var(--sunshine-yellow));">💰</div>
+                <div class="card-content">
+                    <span class="card-category growth">增长黑客</span>
+                    <h3 class="card-title">从 0 到第一个 10 万收入：我的 90 天实战记录</h3>
+                    <p class="card-excerpt">没有广告预算，没有粉丝基础，如何通过内容营销和冷启动策略，在 3 个月内实现盈亏平衡并盈利。</p>
+                    <div class="card-meta">
+                        <span>By 王晓明 · 2024 年 3 月 25 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image" style="background: linear-gradient(135deg, #8B5CF6, #EC4899);">🛠️</div>
+                <div class="card-content">
+                    <span class="card-category tools">工具栈</span>
+                    <h3 class="card-title">一人公司必备工具栈：这 15 个工具让我效率提升 300%</h3>
+                    <p class="card-excerpt">从内容创作到客户管理，从自动化到数据分析，精选最适合 solo founder 的工具组合，总成本<$100/月。</p>
+                    <div class="card-meta">
+                        <span>By 张琳 · 2024 年 3 月 22 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">📈</div>
+                <div class="card-content">
+                    <span class="card-category strategy">商业模式</span>
+                    <h3 class="card-title">服务型 vs 产品型 vs 平台型：哪种 OPC 模式最适合你？</h3>
+                    <p class="card-excerpt">深入分析三种主流 OPC 商业模式的优劣势、启动难度和收入天花板，帮你做出明智选择。</p>
+                    <div class="card-meta">
+                        <span>By 李骅 · 2024 年 3 月 20 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image" style="background: linear-gradient(135deg, #10B981, #3B82F6);">🧠</div>
+                <div class="card-content">
+                    <span class="card-category growth">心智成长</span>
+                    <h3 class="card-title">告别冒名顶替综合症：OPC 创业者的 5 个心理建设技巧</h3>
+                    <p class="card-excerpt">从打工者到创业者，最大的挑战不是技能，而是心态。如何克服自我怀疑，建立真正的自信？</p>
+                    <div class="card-meta">
+                        <span>By 心理咨询师 Sarah · 2024 年 3 月 18 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image" style="background: linear-gradient(135deg, #6366F1, #A855F7);">🤖</div>
+                <div class="card-content">
+                    <span class="card-category tools">AI 应用</span>
+                    <h3 class="card-title">AI 如何帮我一个人干三个人的活？我的日常工作流大公开</h3>
+                    <p class="card-excerpt">ChatGPT + Notion AI + Jasper + Midjourney，看 AI 工具如何成为一人公司的"隐形员工团队"。</p>
+                    <div class="card-meta">
+                        <span>By 李骅 · 2024 年 3 月 15 日</span>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter-section">
+        <h2>📬 订阅周刊</h2>
+        <p>每周一早晨，一篇深度文章 + 3 个实用工具 + 1 个成功案例<br>直接发送到你的邮箱，完全免费</p>
+        <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/mkoppwln" method="POST">
+            <input type="email" name="email" placeholder="输入你的邮箱地址" required>
+            <button type="submit">→ 立即订阅</button>
+        </form>
+        <p style="margin-top: 20px; font-size: 0.875rem; opacity: 0.8;">已有 10,247 位 OPC 实践者订阅 · 随时可取消</p>
+        <p id="subscribeMessage" style="display:none; margin-top: 15px; color: var(--primary-orange); font-weight: 600;">✓ 订阅成功！</p>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>产品服务</h4>
+                <ul>
+                    <li><a href="solourwork_why-opc.html">Why OPC?</a></li>
+                    <li><a href="solourwork_why-now.html">Why Now?</a></li>
+                    <li><a href="solourwork_how.html">How?</a></li>
+                    <li><a href="solourwork_resources.html">Resources</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>内容中心</h4>
+                <ul>
+                    <li><a href="solourwork_blog.html" style="color: var(--primary-orange);">Blog</a></li>
+                    <li><a href="solourwork_podcast.html">Podcast</a></li>
+                    <li><a href="solourwork_community.html">Newsletter</a></li>
+                    <li><a href="https://youtube.com/@solourwork" target="_blank">YouTube</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="solourwork_about.html">About Us</a></li>
+                    <li><a href="solourwork_about.html">Careers</a></li>
+                    <li><a href="solourwork_contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>法律条款</h4>
+                <ul>
+                    <li><a href="solourwork_privacy.html">隐私政策</a></li>
+                    <li><a href="solourwork_terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Solourwork. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        const email = form.email.value;
+
+        const formData = new FormData();
+        formData.append('_subject', '博客订阅 - ' + email);
+        formData.append('email', email);
+        formData.append('类型', '博客订阅');
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('subscribeMessage').style.display = 'block';
+                form.querySelector('button').textContent = '✓ 已订阅';
+                form.querySelector('button').disabled = true;
+                form.reset();
+            } else {
+                alert('订阅失败，请稍后重试');
+            }
+        })
+        .catch(() => alert('网络错误，请稍后重试'));
+    });
+    </script>
+
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById("navLinks").classList.toggle("mobile-open");
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>播客 - 一人公司创业者访谈 | Solourwork</title>
+    <meta name="description" content="每周采访成功的一人公司创业者，深度对话：他们如何找到第一个客户、如何实现收入增长、如何平衡工作与生活。">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark-gray);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a { text-decoration: none; color: var(--dark-gray); font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-orange); }
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        .hero {
+            padding: 160px 5% 80px;
+            background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+            color: white;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .hero .mic-icon { font-size: 5rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.25rem; max-width: 700px; margin: 0 auto 30px; opacity: 0.9; }
+        .platform-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .platform-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .platform-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        section { padding: 80px 5%; }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #6B7280;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+        
+        .episodes-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .episode-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .episode-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        
+        .episode-cover {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+        
+        .episode-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--dark-gray);
+        }
+        
+        .episode-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+        
+        .episode-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .episode-description {
+            color: #4B5563;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .episode-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .play-btn {
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+        .play-btn:hover { transform: scale(1.05); }
+        
+        .show-notes-btn {
+            background: white;
+            color: var(--dark-gray);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.3s;
+        }
+        .show-notes-btn:hover { border-color: var(--primary-orange); }
+        
+        .host-section {
+            background: var(--light-gray);
+            text-align: center;
+        }
+        
+        .host-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .host-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .host-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+        }
+        
+        .host-card .title {
+            color: #6B7280;
+            margin-bottom: 20px;
+        }
+        
+        .host-card p {
+            color: #374151;
+            line-height: 1.7;
+        }
+        
+        .subscribe-section {
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            color: white;
+            text-align: center;
+            padding: 80px 5%;
+        }
+        .subscribe-section h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .subscribe-section p { font-size: 1.25rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.95; }
+        
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        .footer-section h4 { font-size: 1.125rem; margin-bottom: 20px; color: var(--sunshine-yellow); }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 12px; }
+        .footer-section a { color: #D1D5DB; text-decoration: none; transition: color 0.3s; }
+        .footer-section a:hover { color: white; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #374151;
+            color: #9CA3AF;
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .episode-card { grid-template-columns: 1fr; }
+            .episode-cover { width: 100%; height: 200px; }
+            
+            .mobile-menu-btn {
+                display: block !important;
+                position: absolute;
+                right: 3%;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 1001;
+                background: none;
+                border: none;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <div id="hamburger" class="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html">为什么现在</a></li>
+            <li><a href="solourwork_how.html">如何开始</a></li>
+            <li><a href="solourwork_resources.html">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+
+    <section class="hero">
+        <div class="mic-icon">🎙️</div>
+        <h1>一人公司秀</h1>
+        <p>
+            每周二更新，对话全球最成功的 One-Person Company 实践者<br>
+            听他们分享从 0 到 1 的实战经验、踩过的坑和关键转折点
+        </p>
+        <div class="platform-links">
+            <a href="#" class="platform-btn">🍎 Apple Podcasts</a>
+            <a href="#" class="platform-btn">🎵 Spotify</a>
+            <a href="#" class="platform-btn">📻 小宇宙</a>
+            <a href="#" class="platform-btn">🎧 喜马拉雅</a>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">最新节目</h2>
+        <p class="section-subtitle">最新一期 · 第 52 期</p>
+        
+        <div class="episodes-list">
+            <article class="episode-card">
+                <div class="episode-cover">🚀</div>
+                <div class="episode-info">
+                    <h3>EP.52 | 从大厂 P8 到一人公司：他如何用 6 个月实现收入翻倍？</h3>
+                    <div class="episode-meta">
+                        <span>👤 嘉宾：王小明（前阿里 P8）</span>
+                        <span>⏱️ 58:32</span>
+                        <span>📅 2024 年 3 月 26 日</span>
+                    </div>
+                    <p class="episode-description">
+                        王小明的故事可能就是你正在经历的。在大厂工作 10 年后，他选择了离开，用 6 个月时间建立了自己的咨询业务。本期节目，他将分享：如何确定定位？如何获取第一批客户？如何应对收入波动？以及最重要的——如何克服从打工者到创业者的心态转变。
+                    </p>
+                    <div class="episode-actions">
+                        <a href="#" class="play-btn">▶ 立即收听</a>
+                        <a href="#" class="show-notes-btn">📝 Show Notes</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="episode-card">
+                <div class="episode-cover" style="background: linear-gradient(135deg, var(--mint-green), var(--sunshine-yellow));">💡</div>
+                <div class="episode-info">
+                    <h3>EP.51 | 数字产品变现指南：一个模板卖 10000 份的秘诀</h3>
+                    <div class="episode-meta">
+                        <span>👤 嘉宾：Lisa Chen（Notion 模板创作者）</span>
+                        <span>⏱️ 62:15</span>
+                        <span>📅 2024 年 3 月 19 日</span>
+                    </div>
+                    <p class="episode-description">
+                        Lisa 在一年内通过销售 Notion 模板实现了$200K+的收入。她是如何发现市场需求的？如何定价？如何做营销？本期节目深度拆解数字产品的完整生命周期，适合想要打造被动收入的 OPC 实践者。
+                    </p>
+                    <div class="episode-actions">
+                        <a href="#" class="play-btn">▶ 立即收听</a>
+                        <a href="#" class="show-notes-btn">📝 Show Notes</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="episode-card">
+                <div class="episode-cover" style="background: linear-gradient(135deg, #8B5CF6, #EC4899);">📝</div>
+                <div class="episode-info">
+                    <h3>EP.50 | 内容创作的复利效应：如何靠写作建立个人品牌</h3>
+                    <div class="episode-meta">
+                        <span>👤 嘉宾：张有财（公众号 50 万粉博主）</span>
+                        <span>⏱️ 71:20</span>
+                        <span>📅 2024 年 3 月 12 日</span>
+                    </div>
+                    <p class="episode-description">
+                        从 0 到 50 万粉丝，张有财用了 3 年时间。他坚持每周发布 3 篇深度文章，从不间断。本期节目，他分享了内容创作的心法：如何找到写作主题？如何保持持续输出？如何将流量转化为收入？以及内容创作的长期价值。
+                    </p>
+                    <div class="episode-actions">
+                        <a href="#" class="play-btn">▶ 立即收听</a>
+                        <a href="#" class="show-notes-btn">📝 Show Notes</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="episode-card">
+                <div class="episode-cover" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">🎨</div>
+                <div class="episode-info">
+                    <h3>EP.49 | 设计师的 OPC 之路：接私活还是做产品？</h3>
+                    <div class="episode-meta">
+                        <span>👤 嘉宾：阿文（UI 设计师/插画师）</span>
+                        <span>⏱️ 55:48</span>
+                        <span>📅 2024 年 3 月 5 日</span>
+                    </div>
+                    <p class="episode-description">
+                        设计师是做服务型 OPC（接项目）还是产品型 OPC（卖课程/素材）？阿文两者都尝试过，本期节目他对比了两种模式的优劣势，并分享了自己最终选择混合型模式的心路历程和实操方法。
+                    </p>
+                    <div class="episode-actions">
+                        <a href="#" class="play-btn">▶ 立即收听</a>
+                        <a href="#" class="show-notes-btn">📝 Show Notes</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="episode-card">
+                <div class="episode-cover" style="background: linear-gradient(135deg, #10B981, #3B82F6);">🤖</div>
+                <div class="episode-info">
+                    <h3>EP.48 | AI 时代的一人公司：用 ChatGPT 搭建你的"虚拟员工团队"</h3>
+                    <div class="episode-meta">
+                        <span>👤 嘉宾：李骅（SALES FORGE 创始人）</span>
+                        <span>⏱️ 65:30</span>
+                        <span>📅 2024 年 2 月 27 日</span>
+                    </div>
+                    <p class="episode-description">
+                        AI 不是替代你，而是放大你。本期节目详细拆解了如何在 OPC 中应用 AI 工具：内容创作、客户服务、数据分析、自动化流程……看一个人如何活成一支队伍。
+                    </p>
+                    <div class="episode-actions">
+                        <a href="#" class="play-btn">▶ 立即收听</a>
+                        <a href="#" class="show-notes-btn">📝 Show Notes</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="host-section">
+        <h2 class="section-title">你的向导</h2>
+        <p class="section-subtitle">节目的发起人和主持人</p>
+        
+        <div class="host-card">
+            <div class="host-avatar">李</div>
+            <h3>李骅</h3>
+            <p class="title">Solourwork Founder | 前 IBM 销售培训师</p>
+            <p>
+                在 IBM 和华为担任销售培训师 10 年后，我意识到传统的职业路径已经不再适用。2023 年，我决定成为自己的实验品，踏上 One-Person Company 之旅。这个播客记录了我和其他先行者的探索过程，希望能给你一些启发和勇气。
+            </p>
+            <div style="margin-top: 20px;">
+                <a href="#" style="color: var(--primary-orange); text-decoration: none; margin: 0 10px;">🐦 Twitter</a>
+                <a href="#" style="color: var(--primary-orange); text-decoration: none; margin: 0 10px;">💼 LinkedIn</a>
+                <a href="#" style="color: var(--primary-orange); text-decoration: none; margin: 0 10px;">📧 Newsletter</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="subscribe-section">
+        <h2>不错过每一期</h2>
+        <p>订阅播客，每期更新自动推送<br>完全免费，随时取消</p>
+        <div class="platform-links">
+            <a href="#" class="platform-btn">🍎 Apple Podcasts</a>
+            <a href="#" class="platform-btn">🎵 Spotify</a>
+            <a href="#" class="platform-btn">📻 小宇宙</a>
+            <a href="#" class="platform-btn">🎧 喜马拉雅</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>产品服务</h4>
+                <ul>
+                    <li><a href="solourwork_why-opc.html">Why OPC?</a></li>
+                    <li><a href="solourwork_why-now.html">Why Now?</a></li>
+                    <li><a href="solourwork_how.html">How?</a></li>
+                    <li><a href="solourwork_resources.html">Resources</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>内容中心</h4>
+                <ul>
+                    <li><a href="solourwork_blog.html">Blog</a></li>
+                    <li><a href="solourwork_podcast.html" style="color: var(--primary-orange);">Podcast</a></li>
+                    <li><a href="solourwork_community.html">Newsletter</a></li>
+                    <li><a href="https://youtube.com/@solourwork" target="_blank">YouTube</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="solourwork_about.html">About Us</a></li>
+                    <li><a href="solourwork_about.html">Careers</a></li>
+                    <li><a href="solourwork_contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>法律条款</h4>
+                <ul>
+                    <li><a href="solourwork_privacy.html">隐私政策</a></li>
+                    <li><a href="solourwork_terms.html">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Solourwork. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>

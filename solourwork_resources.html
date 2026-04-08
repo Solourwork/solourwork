@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="获取《做好一人公司》书中工具模板、资源清单和学习路径图。">
+    <title>Resources - 资源与工具 | Solourwork</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            min-height: 70px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-cta {
+            display: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            border: 2px solid var(--primary-orange);
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--tech-blue) 100%);
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Book Promo Section */
+        .book-promo-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .book-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .book-cover-wrapper {
+            text-align: center;
+        }
+
+        .book-cover {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .book-cover:hover {
+            transform: scale(1.05);
+        }
+
+        .book-info h2 {
+            font-size: 2.5rem;
+            color: var(--tech-blue);
+            margin-bottom: 1rem;
+        }
+
+        .book-info .subtitle {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .book-info p {
+            color: #4B5563;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .book-highlights {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .book-highlights h4 {
+            color: var(--tech-blue);
+            margin-bottom: 1rem;
+        }
+
+        .book-highlights ul {
+            list-style: none;
+        }
+
+        .book-highlights li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #4B5563;
+        }
+
+        .book-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--mint-green);
+            font-weight: 700;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            padding: 6rem 5%;
+            background: var(--light-gray);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .template-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: #EBF5FF;
+        }
+
+        .template-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .template-card h3 {
+            font-size: 1.5rem;
+            color: var(--tech-blue);
+            margin-bottom: 0.8rem;
+        }
+
+        .template-card p {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .template-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .template-format {
+            background: var(--light-gray);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--tech-blue);
+            font-weight: 600;
+        }
+
+        .btn-download {
+            color: var(--tech-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .btn-download:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Tools Stack Section */
+        .tools-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .tools-category {
+            margin-bottom: 4rem;
+        }
+
+        .tools-category h3 {
+            font-size: 2rem;
+            color: var(--tech-blue);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tools-category h3 span {
+            font-size: 2.5rem;
+        }
+
+        .tools-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-item {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .tool-item-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .tool-item h4 {
+            color: var(--dark-gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .tool-item p {
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+
+        /* Private Domain Section */
+        .private-domain-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--tech-blue), var(--mint-green));
+            color: white;
+        }
+
+        .private-domain-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .private-domain-section > p {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .flywheel-diagram {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .flywheel-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .flywheel-step {
+            background: rgba(255,255,255,0.15);
+            padding: 1.2rem 0.8rem;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .flywheel-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .flywheel-step .step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .flywheel-step h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .flywheel-step p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 5%;
+            background: var(--light-gray);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: var(--tech-blue);
+        }
+
+        .faq-answer {
+            padding: 0 2rem 1.5rem;
+            color: #4B5563;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--mint-green), var(--sunshine-yellow));
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .btn-white-large {
+            background: white;
+            color: var(--tech-blue);
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-white-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .book-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            }
+    
+        @media (max-width: 480px) {
+            nav { padding: 1rem 3%; flex-wrap: wrap; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            .logo { position: static; width: 100%; justify-content: center; }
+            .logo-img { height: 40px; }
+            .cta-button { display: none; }
+            .mobile-menu-btn { display: block !important; position: fixed; right: 3%; top: 0.8rem; font-size: 1.8rem; cursor: pointer; z-index: 1002; background: rgba(255,255,255,0.9); border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; color: #333; }
+            .mobile-cta { display: block; width: 100%; text-align: center; background: var(--primary-orange); color: white; padding: 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem; }
+            .nav-links { display: none; flex-direction: column; width: 100%; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0; }
+            .nav-links.mobile-open { display: flex; }
+            .hero, .page-hero { padding: 6rem 5% 2rem; }
+            .portal-grid, .values-grid, .templates-grid, .trends-grid, .flywheel-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+        <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html">为什么现在</a></li>
+            <li><a href="solourwork_how.html">如何开始</a></li>
+            <li><a href="solourwork_resources.html" style="color: var(--primary-orange);">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>Resources & Tools</h1>
+        <p>一站式资源中心 · 从理论到实践的全套武器库<br/>所有工具模板均基于《做好一人公司》书中方法论</p>
+    </section>
+
+    <!-- Book Promo -->
+    <section class="book-promo-section" id="book">
+        <div class="book-container">
+            <div class="book-cover-wrapper">
+                <img src="book_cover.png" alt="《做好一人公司：自我觉醒的活法》" class="book-cover">
+            </div>
+            <div class="book-info">
+                <h2>《做好一人公司》</h2>
+                <p class="subtitle">自我觉醒的活法</p>
+                <p><strong>作者李骅</strong>，前 IBM/华为销售培训专家，深耕 B2B 销售培训 15 年。2019 年转型一人公司，实现时间与财务双重自由。</p>
+                <p>本书融合作者在大厂的实战经验和一人公司的切身体会，提供了一套完整的方法论和工具包，帮助专业人士从零到一建立可持续的一人公司事业。</p>
+                
+                <div class="book-highlights">
+                    <h4>📚 你将获得：</h4>
+                    <ul>
+                        <li>认知觉醒：重新定义工作、雇佣和生意</li>
+                        <li>苹果核模型：找到你的最佳定位（擅长×喜欢×能赚钱）</li>
+                        <li>商业模式画布：9 宫格系统化思考框架</li>
+                        <li>四步启动法：从 0 到 1 的完整路径图</li>
+                        <li>私域运营飞轮：可持续的客户获取系统</li>
+                        <li>9 大实战工具模板：填空式操作，即拿即用</li>
+                    </ul>
+                </div>
+                
+                <a href="template/framework.pdf" class="btn-buy" download="framework.pdf">获取一人公司实操路线框架图→</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Library -->
+    <section class="templates-section" id="templates">
+        <h2 class="section-title">工具模板库</h2>
+        <p class="section-subtitle">书中所有工具图表的 PDF 版本，免费下载使用</p>
+        
+        <div class="templates-grid">
+            <div class="template-card">
+                <span class="template-icon">📊</span>
+                <h3>商业模式画布</h3>
+                <p>9 宫格框架，帮你系统化思考价值主张、客户关系、渠道通路、收入来源、核心资源等关键要素。</p>
+                <div class="template-meta">
+                    <span class="template-format">PDF · A4</span>
+                    <a href="template/bizcanvas.pdf" class="btn-download" download="bizcanvas.pdf">下载 →</a>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <span class="template-icon">🍎</span>
+                <h3>苹果核模型</h3>
+                <p>三层同心圆结构，从内到外梳理：核心技能 → 可迁移能力 → 市场需求，找到三者的交集。</p>
+                <div class="template-meta">
+                    <span class="template-format">PDF · A4</span>
+                    <a href="template/applecore.pdf" class="btn-download" download="applecore.pdf">下载 →</a>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <span class="template-icon">📝</span>
+                <h3>定位分析图</h3>
+                <p>清点自身能力和资源，以最大的兴趣出发找到方向。</p>
+                <div class="template-meta">
+                    <span class="template-format">PDF · A4</span>
+                    <a href="template/location.pdf" class="btn-download" download="location.pdf">下载 →</a>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <span class="template-icon">🎯</span>
+                <h3>MVP 验证清单</h3>
+                <p>最小可行产品测试清单，包含服务型和产品型两种 MVP 的关键验证步骤和指标。</p>
+                <div class="template-meta">
+                    <span class="template-format">PDF · A4</span>
+                    <a href="template/mvp.pdf" class="btn-download" download="mvp.pdf">下载 →</a>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <span class="template-icon">📈</span>
+                <h3>私域运营 SOP</h3>
+                <p>内容获客 → 沉淀私域 → 信任培育 → 转化成交 → 口碑传播，完整的飞轮运营流程。</p>
+                <div class="template-meta">
+                    <span class="template-format">敬请期待…</span>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <span class="template-icon">💰</span>
+                <h3>定价策略矩阵</h3>
+                <p>四种定价模式对比：成本加成 / 价值定价 / 竞争定价 / 动态定价，附决策树工具。</p>
+                <div class="template-meta">
+                    <span class="template-format">敬请期待…</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Private Domain Flywheel -->
+    <section class="private-domain-section">
+        <h2>🔥 私域运营专题</h2>
+        <p>一人公司的核心能力：打造可持续的客户获取和转化系统</p>
+        
+        <div class="flywheel-diagram">
+            <div class="flywheel-steps">
+                <div class="flywheel-step">
+                    <span class="step-icon">📱</span>
+                    <h4>内容获客</h4>
+                    <p>小红书/抖音/公众号持续输出有价值内容</p>
+                </div>
+                
+                <div class="flywheel-step">
+                    <span class="step-icon">💬</span>
+                    <h4>沉淀私域</h4>
+                    <p>引导添加企业微信/个人号，进入私域池</p>
+                </div>
+                
+                <div class="flywheel-step">
+                    <span class="step-icon">🤝</span>
+                    <h4>信任培育</h4>
+                    <p>朋友圈/社群持续互动，建立专业形象</p>
+                </div>
+                
+                <div class="flywheel-step">
+                    <span class="step-icon">💳</span>
+                    <h4>转化成交</h4>
+                    <p>设计低门槛入口产品，逐步升级转化</p>
+                </div>
+                
+                <div class="flywheel-step">
+                    <span class="step-icon">🔄</span>
+                    <h4>口碑传播</h4>
+                    <p>超预期交付，激励客户转介绍和分享</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Stack -->
+    <section class="tools-section">
+        <h2 class="section-title">推荐工具栈</h2>
+        <p class="section-subtitle">按场景分类的一人公司必备工具（全部为中国区可用产品）</p>
+        
+        <div class="tools-category">
+            <h3><span>📢</span> 获客与营销</h3>
+            <div class="tools-list">
+                <div class="tool-item">
+                    <span class="tool-item-icon">📕</span>
+                    <div>
+                        <h4>小红书</h4>
+                        <p>最适合知识 IP 的内容获客平台，精准女性用户居多</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">🎵</span>
+                    <div>
+                        <h4>抖音 / 视频号</h4>
+                        <p>短视频 + 直播，适合展示型技能和大众化产品</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">📱</span>
+                    <div>
+                        <h4>公众号</h4>
+                        <p>深度内容沉淀，建立专业形象和 SEO 长尾流量</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tools-category">
+            <h3><span>💼</span> 交付与服务</h3>
+            <div class="tools-list">
+                <div class="tool-item">
+                    <span class="tool-item-icon">📹</span>
+                    <div>
+                        <h4>腾讯会议 / Zoom</h4>
+                        <p>一对一咨询、线上课程、项目沟通的标配工具</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">📚</span>
+                    <div>
+                        <h4>小鹅通 / 知识星球</h4>
+                        <p>知识付费平台，支持课程、会员、社群多种形态</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">📊</span>
+                    <div>
+                        <h4>飞书多维表格</h4>
+                        <p>客户管理、项目跟踪、数据分析一体化</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tools-category">
+            <h3><span>🎨</span> 设计与创作</h3>
+            <div class="tools-list">
+                <div class="tool-item">
+                    <span class="tool-item-icon">🖌️</span>
+                    <div>
+                        <h4>可画（Canva 中国）</h4>
+                        <p>海量模板，零基础也能做出专业级设计</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">🤖</span>
+                    <div>
+                        <h4>通义千问 / Kimi</h4>
+                        <p>文案撰写、大纲梳理、头脑风暴的 AI 助手</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">✂️</span>
+                    <div>
+                        <h4>剪映</h4>
+                        <p>手机/电脑端视频剪辑，自动字幕和特效</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tools-category">
+            <h3><span>💰</span> 收款与财务</h3>
+            <div class="tools-list">
+                <div class="tool-item">
+                    <span class="tool-item-icon">📲</span>
+                    <div>
+                        <h4>支付宝 / 微信支付</h4>
+                        <p>国内客户标准收款方式，可申请个体户商户码</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">💳</span>
+                    <div>
+                        <h4>Stripe / PayPal</h4>
+                        <p>海外客户收款，支持多币种和国际信用卡</p>
+                    </div>
+                </div>
+                
+                <div class="tool-item">
+                    <span class="tool-item-icon">🧾</span>
+                    <div>
+                        <h4>电子发票平台</h4>
+                        <p>对接税务局系统，合规开具增值税普通/专用发票</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <h2 class="section-title">常见问题</h2>
+            <p class="section-subtitle">关于 OPC 的合法合规和实操问题</p>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    一人公司需要注册公司吗？
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>初期不需要。你可以以自然人身份开展业务，用个人支付宝/微信收款。当月收入稳定超过¥10 万/月时，建议注册个体工商户或有限责任公司，更合规且税务优化。具体可咨询当地工商局或代理记账公司。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    如何缴纳社保和公积金？
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>有三种方式：(1) 挂靠朋友公司代缴（不推荐，有法律风险）；(2) 以灵活就业人员身份在户籍地自行缴纳（最稳妥）；(3) 注册个体户后以单位名义缴纳。推荐第 2 种，通过当地社保局 APP 即可办理。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    OPC 和传统兼职有什么区别？
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>本质区别在于：兼职是出卖时间换钱（如周末做家教），仍然是打工思维；OPC 是建立系统和产品，追求被动收入和规模化（如录制课程卖给多人）。OPC 的核心是产品化、品牌化、可持续。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    如何给服务定价？
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>三种参考方法：(1) 成本加成法：计算你的时间成本 + 期望利润率；(2) 价值定价法：根据你为客户创造的价值定价（推荐）；(3) 市场对标法：参考同行价格区间。早期可以略低于市场价积累案例，但不要免费。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    如何处理难缠客户？
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>预防胜于治疗：(1) 签约前充分沟通预期，明确交付范围；(2) 使用标准合同模板，约定修改次数和额外收费；(3) 收取预付款（建议 50% 起）；(4) 定期同步进度，避免最后时刻才反馈。遇到恶意拖欠尾款的，果断走法律途径。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>需要更多指导？</h2>
+        <p>加入 OPC 社群，与万名先行者同行<br/>获取每周更新的实战案例和专属资源</p>
+        <a href="community.html" class="btn-white-large">加入社群 →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="solourwork_about.html">关于我们</a>
+            <a href="solourwork_blog.html">博客</a>
+            <a href="solourwork_podcast.html">播客</a>
+            <a href="solourwork_contact.html">联系我们</a>
+            <a href="solourwork_privacy.html">隐私政策</a>
+            <a href="solourwork_terms.html">服务条款</a>
+        </div>
+        <p class="copyright">© 2026 Solourwork. All rights reserved. 一人无限可能.</p>
+    </footer>
+
+    <script>
+    // Force PDF download instead of opening in browser
+    document.querySelectorAll('a[href$=".pdf"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            const filename = url.split('/').pop();
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(() => {
+                    // Fallback: try direct download
+                    window.open(url, '_blank');
+                });
+        });
+    });
+    </script>
+
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById("navLinks").classList.toggle("mobile-open");
+    }
+    </script>
+</body>
+</html>

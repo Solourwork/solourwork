@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务条款 | Solourwork</title>
+    <meta name="description" content="Solourwork 服务条款：使用本平台前请仔细阅读服务协议。明确您的权利与义务，保障双方合法权益。">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --tech-blue: #004E89;
+            --mint-green: #00C9A7;
+            --sunshine-yellow: #FFD166;
+            --dark-gray: #1F2937;
+            --light-gray: #F9FAFB;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', '思源黑体', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            min-height: 70px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            position: absolute;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .cta-button {
+            position: absolute;
+            right: 5%;
+            background: white;
+            color: var(--primary-orange);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-cta {
+            display: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        .hero {
+            padding: 160px 5% 60px;
+            background: linear-gradient(135deg, #FFF5F0 0%, #F0F7FF 100%);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p { color: #6B7280; font-size: 1.125rem; }
+        
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 5%;
+        }
+        .content h2 { font-size: 1.75rem; margin: 40px 0 20px; color: var(--tech-blue); }
+        .content h3 { font-size: 1.25rem; margin: 30px 0 15px; }
+        .content p { margin-bottom: 16px; color: #374151; }
+        .content ul { margin: 16px 0 16px 24px; }
+        .content li { margin-bottom: 8px; color: #374151; }
+        
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+    
+        /* ========================================
+           手机端响应式优化 (Mobile Responsive)
+           ======================================== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.75rem 4%;
+                flex-wrap: wrap;
+            }
+            
+            .logo-img {
+                height: 50px;
+            }
+            
+            .nav-links {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+            
+            .nav-links li {
+                margin-bottom: 0.25rem;
+            }
+            
+            .cta-btn, .cta-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .hero {
+                padding: 120px 4% 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-section ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.5rem 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                font-size: 0.8rem;
+                gap: 0.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav { padding: 1rem 3%; flex-wrap: wrap; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            .logo { position: static; width: 100%; justify-content: center; }
+            .logo-img { height: 40px; }
+            .cta-button { display: none; }
+            .mobile-menu-btn { display: block !important; position: fixed; right: 3%; top: 0.8rem; font-size: 1.8rem; cursor: pointer; z-index: 1002; background: rgba(255,255,255,0.9); border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; color: #333; }
+            .mobile-cta { display: block; width: 100%; text-align: center; background: var(--primary-orange); color: white; padding: 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem; }
+            .nav-links { display: none; flex-direction: column; width: 100%; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0; }
+            .nav-links.mobile-open { display: flex; }
+            .hero, .page-hero { padding: 6rem 5% 2rem; }
+            .portal-grid, .values-grid, .templates-grid, .trends-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="solourwork-logo.svg" alt="Solourwork Logo" class="logo-img">
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="solourwork_why-opc.html">为什么一人公司</a></li>
+            <li><a href="solourwork_why-now.html">为什么现在</a></li>
+            <li><a href="solourwork_how.html">如何开始</a></li>
+            <li><a href="solourwork_resources.html">资源中心</a></li>
+            <li><a href="solourwork_journey.html">创始人故事</a></li>
+            <li><a href="solourwork_community.html">社区</a></li>
+            <li><a href="solourwork_about.html">关于我们</a></li>
+            <li><a href="solourwork_contact.html" class="mobile-cta">联系我们</a></li>
+        </ul>
+        <a href="solourwork_contact.html" class="cta-button">联系我们</a>
+    </nav>
+
+    <section class="hero">
+        <h1>📋 服务条款</h1>
+        <p>最后更新：2026 年 3 月</p>
+    </section>
+
+    <div class="content">
+        <h2>一、条款接受</h2>
+        <p>您访问或使用 solourwork.com 网站（以下简称"本站"），即表示您已阅读、理解并同意接受本服务条款（以下简称"条款"）的全部内容。如果您不同意本条款的任何内容，请不要使用本站。</p>
+
+        <h2>二、服务说明</h2>
+        <p>Solourwork 为有意建立一人公司（OPC）的个人提供教育内容、资源和社区平台服务。我们的服务包括：</p>
+        <ul>
+            <li>教育性文章、指南和教程</li>
+            <li>在线课程和培训项目</li>
+            <li>社区论坛和人脉拓展机会</li>
+            <li>播客及多媒体内容</li>
+            <li>OPC 建设者的工具和模板</li>
+        </ul>
+
+        <h2>三、用户账户</h2>
+        <p>使用某些功能时，您可能需要创建账户。您需自行负责：</p>
+        <ul>
+            <li>妥善保管账户凭证的机密性</li>
+            <li>对您账户下发生的所有活动负责</li>
+            <li>如发现任何未授权访问，请立即通知我们</li>
+            <li>提供准确、完整的注册信息</li>
+        </ul>
+        <p>您必须年满 13 周岁方可创建账户。</p>
+
+        <h2>四、用户行为规范</h2>
+        <p>您同意不会从事以下行为：</p>
+        <ul>
+            <li>将本站用于任何非法目的或违反任何法律</li>
+            <li>骚扰、威胁或伤害其他用户</li>
+            <li>发布垃圾信息、恶意软件或其他有害代码</li>
+            <li>冒充任何个人或实体</li>
+            <li>干扰或破坏本站服务器或网络</li>
+            <li>尝试未经授权访问本站</li>
+            <li>未经许可使用自动化系统访问本站</li>
+        </ul>
+
+        <h2>五、知识产权</h2>
+        <p>本站所有内容，包括但不限于文本、图形、标志、图片、音频、视频和软件，均为 Solourwork 或其内容供应商的财产，受国际版权法保护。</p>
+        <p>未经我们明确书面许可，您不得复制、分发、修改、创作衍生作品、公开展示或商业利用本站的任何内容。</p>
+
+        <h2>六、支付条款</h2>
+        <p>某些服务可能需要付费。购买付费服务即表示您同意：</p>
+        <ul>
+            <li>按购买时的价格支付所有费用</li>
+            <li>提供当前、完整、准确的购买信息</li>
+            <li>及时更新您的支付信息变更</li>
+        </ul>
+        <p><strong>退款政策：</strong> 数字产品（课程、模板）一旦访问，概不退换。社区会员可随时取消，不再退还当月费用。</p>
+
+        <h2>七、免责声明</h2>
+        <p>本站及所有服务均按"原样"和"可用"提供，不提供任何明示或暗示的保证，包括但不限于适销性、特定用途适用性或非侵权的保证。</p>
+        <p>我们不保证本站将不间断、安全或无错误地运行。</p>
+
+        <h2>八、责任限制</h2>
+        <p>在法律允许的最大范围内，Solourwork 对任何间接、附带、特殊、后果性或惩罚性损害赔偿，或任何利润或收入损失、数据丢失、商誉损失或其他无形损失，不承担任何责任，无论是否因使用本站而产生。</p>
+        <p>我们的总责任不超过您在过去12个月内向我们支付的金额，或如果您未曾购买任何服务，则不超过100美元。</p>
+
+        <h2>九、教育目的免责声明</h2>
+        <p>本站所有内容仅供教育和参考之用，不构成专业建议（法律、财务、商业或其他方面）。在做出任何商业决策之前，您应咨询相关专业人士。</p>
+        <p>我们不保证任何特定收入或商业成果。您的成功取决于您的努力、技能、市场条件和我们无法控制的其他因素。</p>
+
+        <h2>十、赔偿</h2>
+        <p>您同意对 Solourwork 及其管理人员、董事、员工、代理和关联公司因您使用本站或违反本条款而产生的任何索赔、责任、损害、损失或费用进行抗辩、赔偿并使其免受损害。</p>
+
+        <h2>十一、终止</h2>
+        <p>我们保留自行决定终止或暂停您访问本站的权利，无需事先通知，适用于我们认为您违反了本条款或对其他用户、我们或第三方有害的行为。</p>
+
+        <h2>十二、适用法律</h2>
+        <p>本条款受中华人民共和国法律管辖，不考虑其法律冲突规定。</p>
+
+        <h2>十三、争议解决</h2>
+        <p>因本条款产生的任何争议，应首先通过善意协商解决。如协商不成，争议应提交中国北京进行有约束力的仲裁。</p>
+
+        <h2>十四、条款变更</h2>
+        <p>我们保留随时修改本条款的权利。我们将通过电子邮件或本站显著通知向用户通报重大变更。修改后继续使用本站即表示您接受新条款。</p>
+
+        <h2>十五、联系方式</h2>
+        <p>如对本条款有任何疑问，请通过以下方式联系我们：</p>
+        <p><strong>电子邮件：</strong> solomaker@Solourwork.com<br>
+        <strong>地址：</strong> Solourwork，中国北京</p>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="solourwork_about.html">关于我们</a>
+            <a href="solourwork_blog.html">博客</a>
+            <a href="solourwork_podcast.html">播客</a>
+            <a href="solourwork_contact.html">联系我们</a>
+            <a href="solourwork_privacy.html">隐私政策</a>
+            <a href="solourwork_terms.html">服务条款</a>
+        </div>
+        <p class="copyright">© 2026 Solourwork. All rights reserved. 一人无限可能.</p>
+    </footer>
+
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById("navLinks").classList.toggle("mobile-open");
+    }
+    </script>
+</body>
+</html>

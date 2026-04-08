@@ -1,0 +1,48 @@
+<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E86DE;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- 无限符号 ∞ 与 S 融合的主图形 -->
+  <g transform="translate(10, 15)" filter="url(#shadow)">
+    <!-- 外圈 - 较大的椭圆形成∞的右半部分 -->
+    <ellipse cx="75" cy="45" rx="35" ry="25" 
+             fill="none" 
+             stroke="url(#brandGradient)" 
+             stroke-width="5"
+             transform="rotate(-25 75 45)"/>
+    
+    <!-- 内圈 - 较小的椭圆形成∞的左半部分，同时构成 S 的上半部 -->
+    <ellipse cx="45" cy="45" rx="28" ry="20" 
+             fill="none" 
+             stroke="url(#brandGradient)" 
+             stroke-width="5"
+             transform="rotate(25 45 45)"/>
+    
+    <!-- 连接弧线 - 完成 S 形的流动感 -->
+    <path d="M 55 30 Q 65 45 55 60" 
+          fill="none" 
+          stroke="url(#brandGradient)" 
+          stroke-width="5" 
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- 品牌文字 Solourwork -->
+  <text x="110" y="70" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+        font-size="42" 
+        font-weight="700"
+        fill="url(#brandGradient)">
+    Solourwork
+  </text>
+  
+  <!-- 可选的标语（小字版本） -->
+  <!-- <text x="112" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#666" letter-spacing="1">One Person, Unlimited Possibilities</text> -->
+</svg>
