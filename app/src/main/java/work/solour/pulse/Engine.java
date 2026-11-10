@@ -7,11 +7,11 @@ public class Engine {
  public static class Measurement {public int hr; public Measurement(int h){hr=h;}}
  public static int parseHr(byte[] b){if(b==null||b.length<2)throw new IllegalArgumentException("短心率包");if((b[0]&1)==0)return b[1]&255;if(b.length<3)throw new IllegalArgumentException("短16位心率包");return (b[1]&255)|((b[2]&255)<<8);}
  public void heart(int v,long now){if(v>=25&&v<=250){hr=v;hrAt=now;}}
- public boolean freshHr(long now){return now-hrAt<=10000;}
+ public boolean freshHr(long now){return now>=hrAt&&now-hrAt<=10000;}
  public void velocity(double metresPerSecond,long now){if(metresPerSecond>=0&&metresPerSecond<30){speed=metresPerSecond;speedAt=now;}}
  public void cadence(int value,long now){if(value>=0&&value<300){cadence=value;cadenceAt=now;}}
- public void disconnect(){hrAt=speedAt=cadenceAt=-100000;rise=fall=0;}
- public void pause(){paused=!paused;rise=fall=0;}
+ public void disconnect(){hrAt=speedAt=cadenceAt=-100000;rise=fall=0;candidate=-1;candidateSeconds=0;}
+ public void pause(){paused=!paused;rise=fall=0;candidate=-1;candidateSeconds=0;}
  public void startGroup(boolean guess){if(groupStart<0){groupStart=seconds;inferred=guess;peak=smooth;rise=fall=0;}}
  public void finishGroup(){if(groupStart>=0){Group g=new Group(groupStart,seconds-groupStart,inferred);groups.add(g);if(g.confirmed)confirmed++;groupStart=-1;rise=fall=0;startRest();}}
  public void confirm(int i){Group g=groups.get(i);if(!g.confirmed){g.confirmed=true;confirmed++;}}
@@ -20,8 +20,8 @@ public class Engine {
  public void startRest(){rest=restDefault;restPaused=false;restDone=false;rise=fall=0;}
  public void tick(long now){countdown.clear();restDone=false;if(!running||paused)return;seconds++;boolean fresh=freshHr(now);warning=fresh&&hr>=alert;
  if(fresh){valid++;sum+=hr;max=Math.max(max,hr);smooth=smooth==0?hr:.25*hr+.75*smooth;curve.add(hr);}else{curve.add(0);rise=fall=0;}
- if(now-cadenceAt<=5000){cadenceCount++;cadenceSum+=cadence;}
- if(scene.equals("跑步机")){if(now-speedAt<=5000){distance+=speed;deviceDistanceUsed=true;}else if(manualKmh>0){distance+=manualKmh/3.6;estimatedUsed=true;}}
+ if(now>=cadenceAt&&now-cadenceAt<=5000){cadenceCount++;cadenceSum+=cadence;}
+ if(scene.equals("跑步机")){if(now>=speedAt&&now-speedAt<=5000){distance+=speed;deviceDistanceUsed=true;}else if(manualKmh>0){distance+=manualKmh/3.6;estimatedUsed=true;}}
  if(rest>0){if(!restPaused){rest--;if(rest==10||rest==5||rest==3||rest==2||rest==1)countdown.add(rest);if(rest==0)restDone=true;}rise=fall=0;}
  else if(scene.equals("器械")&&fresh&&!warning){if(baseN<20){baseSum+=smooth;baseN++;if(baseN==20)baseline=baseSum/20;}else if(groupStart<0){rise=smooth>=baseline+12?rise+1:0;if(rise>=8)startGroup(true);}else if(inferred){peak=Math.max(peak,smooth);fall=peak-smooth>=10?fall+1:0;if(seconds-groupStart>=20&&fall>=10)finishGroup();}}
  else {rise=fall=0;}
