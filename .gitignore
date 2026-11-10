@@ -1,0 +1,6 @@
+/tools/
+/build/
+/dist/
+/private/
+*.keystore
+*.jks
