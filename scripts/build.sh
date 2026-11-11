@@ -17,8 +17,8 @@ cp build/base.apk build/unsigned.apk
 "$BUILD_TOOLS/zipalign" -f -p 4 build/unsigned.apk build/aligned.apk
 if [ -n "${SIGNING_KEYSTORE:-}" ]; then
  : "${SIGNING_PASSWORD:?Set SIGNING_PASSWORD privately}"
- "$BUILD_TOOLS/apksigner" sign --ks "$SIGNING_KEYSTORE" --ks-pass env:SIGNING_PASSWORD --ks-key-alias pulse --out dist/pulse-1.1.apk build/aligned.apk
- "$BUILD_TOOLS/apksigner" verify --verbose --print-certs dist/pulse-1.1.apk
+ "$BUILD_TOOLS/apksigner" sign --ks "$SIGNING_KEYSTORE" --ks-pass env:SIGNING_PASSWORD --ks-key-alias pulse --out dist/pulse-${APP_VERSION:-1.1.1}.apk build/aligned.apk
+ "$BUILD_TOOLS/apksigner" verify --verbose --print-certs dist/pulse-${APP_VERSION:-1.1.1}.apk
 else
  echo 'Unsigned aligned APK at build/aligned.apk. Set signing environment variables to sign.'
 fi

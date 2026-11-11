@@ -1,4 +1,6 @@
-# 同频 PULSE 健身伴侣 · Android 1.1
+# 同频 PULSE 健身伴侣 · Android 1.1.1
+
+本轮为页面与交互改版，页面结构和修复详见 [UI-REDESIGN.md](UI-REDESIGN.md)。APK输出为 `dist/pulse-1.1.1.apk`，沿用1.1签名，可覆盖升级；没有自动更新GitHub Release。
 
 Android 8.0+ 原生 Java 应用。暖白 / 深绿 / 浅荧光绿；三个场景动态插画。无账号、无 INTERNET 权限；报告仅在本机保存最近100份，可删除。清除数据/卸载会删除报告，系统备份已关闭。
 
@@ -33,3 +35,7 @@ bash scripts/build.sh
 脚本先运行纯Java算法/会话流程断言，再编译、dex、打包、对齐、可选签名和验证。源代码、音乐合成器与测试全包含在源码归档。音乐WAV也随源归档保存。APK min26、target32，支持直接侧载；并非Play商店合规发布。此重建使用新签名，旧签名丢失时不能保证覆盖安装旧APK。
 
 发布采用独立应用源码分支和独立Release，不修改官网文件、不向main推送应用代码。签名私钥不在公共源码或Release中；维护后续覆盖更新必须保管当前私钥。
+
+## 模拟器内界面回归
+
+安装新版APK后设置与构建相同的环境变量以及 `ADB`，运行 `TEST_RUNNER=UiRunner bash scripts/device-test.sh`。测试通过Android UiAutomation注入触摸事件，检查真实页面跳转、表单、三场景训练、休息、组确认和报告删除，并将截图写入设备应用的外部文件目录 `ui-validation/`。这只验证模拟器交互，不替代实体设备测试。运行 `TEST_RUNNER=FlowRunner bash scripts/device-test.sh` 复核服务与报告流程。脚本会把失败或没有通过结果的测试作为失败退出。

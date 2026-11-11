@@ -1,0 +1,65 @@
+package work.solour.pulse;
+
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.os.*;
+import android.view.*;
+import android.view.accessibility.*;
+import android.widget.*;
+import org.json.*;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+
+/** Touches production Views, exercises navigation and confirms the resulting service/storage state. */
+public class UiRunner extends Instrumentation {
+    MainActivity a;int checks=0,touches=0;JSONArray original;final StringBuilder log=new StringBuilder();
+    void ok(boolean b,String text){checks++;if(!b)throw new AssertionError(text);log.append("OK ").append(text).append('\n');}
+    boolean read(BooleanSupplier predicate){AtomicBoolean value=new AtomicBoolean();runOnMainSync(()->value.set(predicate.getAsBoolean()));return value.get();}
+    void await(BooleanSupplier p,String message){long end=SystemClock.uptimeMillis()+20000;while(SystemClock.uptimeMillis()<end){if(read(p))return;SystemClock.sleep(160);}throw new AssertionError("timeout: "+message+"; screen="+a.screen);}
+    void page(String route){await(()->a.screen.equals(route),"page "+route);ok(read(()->a.screen.equals(route)),"page "+route);android.util.Log.i("PULSE_UI_TEST",route);SystemClock.sleep(250);}
+    View view(String tag){return a.getWindow().getDecorView().findViewWithTag(tag);}
+    void click(String tag){await(()->view(tag)!=null,"visible control "+tag);runOnMainSync(()->{View v=view(tag);v.requestRectangleOnScreen(new Rect(0,0,v.getWidth(),v.getHeight()),true);});SystemClock.sleep(300);Rect r=new Rect();AtomicBoolean enabled=new AtomicBoolean();runOnMainSync(()->{View v=view(tag);enabled.set(v.isEnabled());v.getGlobalVisibleRect(r);});ok(enabled.get(),"enabled "+tag);ok(r.width()>0&&r.height()>0,"on screen "+tag);touch(r.centerX(),r.centerY());touches++;SystemClock.sleep(300);}
+    void touch(float x,float y){long t=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(t,t,MotionEvent.ACTION_DOWN,x,y,0),up=MotionEvent.obtain(t,t+60,MotionEvent.ACTION_UP,x,y,0);down.setSource(InputDevice.SOURCE_TOUCHSCREEN);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);if(!getUiAutomation().injectInputEvent(down,true)||!getUiAutomation().injectInputEvent(up,true))throw new AssertionError("touch injection failed");down.recycle();up.recycle();}
+    void value(String tag,String text){runOnMainSync(()->((EditText)view(tag)).setText(text));}
+    void dialog(String text){long until=SystemClock.uptimeMillis()+15000;while(SystemClock.uptimeMillis()<until){AccessibilityNodeInfo root=getUiAutomation().getRootInActiveWindow();if(root!=null){List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText(text);for(AccessibilityNodeInfo n:nodes)if(text.contentEquals(n.getText()==null?"":n.getText())){Rect r=new Rect();n.getBoundsInScreen(r);if(!r.isEmpty()){touch(r.centerX(),r.centerY());touches++;SystemClock.sleep(350);return;}}}SystemClock.sleep(200);}throw new AssertionError("dialog control not found: "+text);}
+    void shot(String name){SystemClock.sleep(400);Bitmap bitmap=getUiAutomation().takeScreenshot();if(bitmap==null)throw new AssertionError("no screenshot");try{File folder=new File(getTargetContext().getExternalFilesDir(null),"ui-validation");folder.mkdirs();try(FileOutputStream out=new FileOutputStream(new File(folder,name+".png"))){bitmap.compress(Bitmap.CompressFormat.PNG,100,out);}}catch(IOException e){throw new RuntimeException(e);}bitmap.recycle();}
+    void back(){click("nav_back");}
+    void stopSession(){click("nav_more");page("options");click("end_session");dialog("继续训练");page("options");click("end_session");dialog("结束并保存");page("report");}
+    @Override public void onCreate(Bundle b){super.onCreate(b);start();}
+    @Override public void onStart(){Bundle result=new Bundle();try{
+        Intent intent=new Intent(getTargetContext(),MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        a=(MainActivity)startActivitySync(intent);await(()->a.bound,"service bound");
+        runOnMainSync(()->{try{original=a.s.reports();if(a.s.e.running){a.s.e.running=false;}a.s.save(new JSONArray());a.prefs.edit().clear().commit();a.demo=false;a.home();}catch(Exception e){throw new RuntimeException(e);}});
+        page("home");shot("01-home");
+        click("tab_history");page("history");await(()->a.body.getChildCount()>0,"history empty state");shot("02-history-empty");click("tab_settings");page("settings");
+        click("settings_sound");page("sound");boolean music=read(()->a.prefs.getBoolean("music",true));click("toggle_music");ok(read(()->a.prefs.getBoolean("music",true)!=music),"music setting feedback persisted");click("toggle_music");
+        click("sound_voice");page("voice");click("voice_1");page("sound");ok(read(()->a.prefs.getInt("style",0)==1),"voice selection persisted");
+        click("tts_settings");SystemClock.sleep(1200);long backTime=SystemClock.uptimeMillis();getUiAutomation().injectInputEvent(new KeyEvent(backTime,backTime,KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_BACK,0),true);getUiAutomation().injectInputEvent(new KeyEvent(backTime,backTime+60,KeyEvent.ACTION_UP,KeyEvent.KEYCODE_BACK,0),true);SystemClock.sleep(500);page("sound");back();page("settings");
+        click("settings_alert");page("number_alert");value("number_input","5");click("save_number");page("number_alert");ok(read(()->((EditText)view("number_input")).getError()!=null),"invalid alert remains editable");value("number_input","175");click("save_number");page("settings");
+        click("settings_about");page("about");shot("03-about");back();page("settings");click("tab_train");page("home");
+        // Cycle: normal setup, permissions and absent hardware, then explicit demo.
+        click("scene_单车");page("prepare");shot("04-cycle-prepare");click("setup_goal");page("goal");click("goal_input");value("goal_input","-1");click("save_goal");page("goal");value("goal_input","12");click("save_goal");page("prepare");ok(read(()->a.goal==12),"goal saved");
+        click("setup_device");page("devices");shot("05-devices-empty");click("scan_devices");SystemClock.sleep(1000);
+        // Android 9 permission dialog is handled by a user-facing click, no automatic grant.
+        long permissionUntil=SystemClock.uptimeMillis()+15000;boolean allowed=false;while(SystemClock.uptimeMillis()<permissionUntil){AccessibilityNodeInfo root=getUiAutomation().getRootInActiveWindow();if(root!=null&&!root.findAccessibilityNodeInfosByText("ALLOW").isEmpty()){dialog("ALLOW");allowed=true;break;}if(read(()->!a.s.ble.status.startsWith("等待")&&!a.s.ble.status.startsWith("未连接")))break;SystemClock.sleep(250);}
+        await(()->!a.s.ble.status.startsWith("等待")&&!a.s.ble.status.startsWith("未连接"),"scan hardware feedback");ok(true,"scan gives hardware/permission feedback after one tap");back();page("prepare");
+        click("setup_mode");page("mode");click("mode_real");page("prepare");click("setup_mode");click("mode_demo");page("prepare");
+        click("setup_more");page("preferences");click("pref_rest");page("number_rest_setup");value("number_input","20");click("save_number");page("number_rest_setup");ok(read(()->((EditText)view("number_input")).getError()!=null),"invalid rest feedback");value("number_input","30");click("save_number");page("preferences");click("pref_voice");page("voice");click("voice_0");page("preferences");back();page("prepare");
+        click("start_session");page("training");await(()->a.s.e.seconds>=2,"ticker running");shot("06-cycle-training");click("pause_session");ok(read(()->a.s.e.paused),"touch pauses session");int second=a.s.e.seconds;SystemClock.sleep(1300);ok(read(()->a.s.e.seconds==second),"UI pause freezes timer");click("pause_session");ok(read(()->!a.s.e.paused),"touch resumes session");
+        click("begin_rest");page("rest");shot("07-rest");click("pause_rest");ok(read(()->a.s.e.restPaused),"touch pauses rest");int left=a.s.e.rest;click("extend_rest");ok(read(()->a.s.e.rest==left+30),"touch extends rest");click("pause_rest");ok(read(()->!a.s.e.restPaused),"touch resumes rest");runOnMainSync(()->{a.s.e.rest=1;});await(()->a.s.e.rest==0,"rest completes");ok(read(()->a.screen.equals("rest")&&a.s.e.groupStart<0),"rest finish stays on rest and starts no group");click("exit_rest");page("training");
+        click("nav_more");click("option_music");page("sound");boolean liveMusic=a.s.audio.music;click("toggle_music");ok(read(()->a.s.audio.music!=liveMusic),"live music setting applies");back();page("options");click("option_rest");page("number_rest_live");value("number_input","90");click("save_number");page("options");ok(read(()->a.s.e.restDefault==90),"live rest preference applied");back();page("training");stopSession();shot("08-report");ok(read(()->!a.s.e.running&&a.s.reports().length()==1),"end confirmation persists report");click("report_done");page("home");
+        // Treadmill forms and navigation, including estimates.
+        click("scene_跑步机");page("prepare");click("setup_goal");page("goal");click("goal_distance");value("goal_input","2");click("save_goal");page("prepare");ok(read(()->a.km&&a.goal==2),"treadmill distance target");
+        click("setup_more");click("pref_speed");page("number_speed_setup");value("number_input","99");click("save_number");page("number_speed_setup");value("number_input","6");click("save_number");page("preferences");back();page("prepare");click("start_session");page("training");shot("09-treadmill");click("nav_more");click("option_speed");page("number_speed_live");value("number_input","8");click("save_number");page("options");ok(read(()->a.s.e.manualKmh==8),"live manual speed applied");back();page("training");stopSession();click("report_done");page("home");
+        // Equipment actual start/complete, empty list, guessed confirmation/deletion, unfinished group.
+        click("scene_器械");click("start_session");page("training");click("open_groups");page("groups");ok(read(()->a.s.e.groups.isEmpty()),"empty group list has a page");shot("10-groups-empty");back();page("training");click("pause_session");ok(read(()->!view("group_action").isEnabled()),"paused group action is visibly disabled");click("pause_session");click("group_action");ok(read(()->a.s.e.groupStart>=0&&!a.s.e.inferred),"manual group started via touch");SystemClock.sleep(1100);click("group_action");page("rest");ok(read(()->a.s.e.confirmed==1),"manual group completed via touch");click("exit_rest");page("training");
+        runOnMainSync(()->{a.s.e.startGroup(true);a.s.e.finishGroup();a.s.e.rest=0;a.observedRest=0;});click("open_groups");page("groups");click("group_1");page("group_detail");shot("11-group-pending");click("confirm_group");page("groups");ok(read(()->a.s.e.confirmed==2&&a.s.e.pending()==0),"guessed group confirmed via touch");click("group_1");click("delete_group");dialog("删除");page("groups");ok(read(()->a.s.e.confirmed==1),"group deletion adjusts count");back();page("training");click("group_action");click("nav_more");click("discard_group");dialog("丢弃");page("training");ok(read(()->a.s.e.groupStart<0),"unfinished group discard works");click("group_action");stopSession();ok(read(()->a.currentReport.optBoolean("unfinished")&&a.currentReport.optInt("confirmed")==1),"unfinished group excluded at UI end");click("report_done");
+        click("tab_history");page("history");await(()->view("report_0")!=null,"saved report list");shot("12-history");click("report_0");page("report");click("nav_more");page("report_options");click("delete_report");dialog("取消");page("report_options");click("delete_report");dialog("删除");page("history");await(()->a.s.reports().length()==2,"report delete persisted");ok(true,"report cancellation and confirmed deletion");
+        click("tab_train");page("home");runOnMainSync(()->{try{a.s.save(original);}catch(Exception e){throw new RuntimeException(e);}});
+        log.append("PASS ").append(checks).append(" UI assertions, ").append(touches).append(" actual touch actions; screenshots captured.\n");
+        result.putString("stream",log.toString());finish(Activity.RESULT_OK,result);
+    }catch(Throwable t){log.append("FAIL ").append(t).append('\n');try{shot("failure");}catch(Throwable ignored){}result.putString("stream",log.toString());finish(Activity.RESULT_CANCELED,result);}}
+}
