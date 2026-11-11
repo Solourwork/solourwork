@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
         label(body,s.e.simulated?"模拟模式 · 非真实测量":"真实测量 · 按自己的节奏",12,MUTED);gap(body,16);
         clock=label(body,time(s.e.seconds),56,INK);clock.setTypeface(Typeface.create("sans-serif-light",0));sessionState=label(body,"正在训练",14,MUTED);gap(body,12);
         LinearLayout a=card(body,PALE);a.addView(new SceneArt(this,s.e.scene,true),new LinearLayout.LayoutParams(-1,dp(92)));
-        LinearLayout metrics=row();LinearLayout h=col(),cad=col();label(h,"心率 · BPM",12,MUTED);heart=label(h,"—",28,INK);label(cad,s.e.scene.equals("单车")?"踏频 · rpm":"步频 · spm",12,MUTED);cadence=label(cad,"—",28,INK);metrics.addView(h,new LinearLayout.LayoutParams(0,-2,1));metrics.addView(cad,new LinearLayout.LayoutParams(0,-2,1));body.addView(metrics);gap(body,18);
+        LinearLayout metrics=row();LinearLayout h=col(),cad=col();label(h,"心率 · BPM",12,MUTED);heart=label(h,"—",28,INK);label(cad,s.e.scene.equals("器械")?"本组时长":s.e.scene.equals("单车")?"踏频 · rpm":"步频 · spm",12,MUTED);cadence=label(cad,"—",28,INK);metrics.addView(h,new LinearLayout.LayoutParams(0,-2,1));metrics.addView(cad,new LinearLayout.LayoutParams(0,-2,1));body.addView(metrics);gap(body,18);
         if(s.e.scene.equals("跑步机")){distance=label(body,"",18,INK);gap(body,12);}
         if(s.e.scene.equals("器械")){groupState=label(body,"",16,INK);link(body,"open_groups","查看组记录 ›",()->groups());label(body,"自动辅助结果为推测，确认后才计入目标。",12,MUTED);}
         pauseButton=button(footer,"pause_session",s.e.paused?"继续训练":"暂停训练",true,()->togglePause());gap(footer,10);
@@ -307,10 +307,10 @@ public class MainActivity extends Activity {
         if(!bound)return;Engine e=s.e;long now=SystemClock.elapsedRealtime();
         if(clock!=null)clock.setText(time(e.seconds));
         if(heart!=null){heart.setText(e.freshHr(now)?""+e.hr:"—");heart.setTextColor(e.warning?0xffAD5636:INK);}
-        if(cadence!=null)cadence.setText(now>=e.cadenceAt&&now-e.cadenceAt<=5000?""+e.cadence:"—");
+        if(cadence!=null)cadence.setText(e.scene.equals("器械")?(e.groupStart>=0?time(e.seconds-e.groupStart):"—"):(now>=e.cadenceAt&&now-e.cadenceAt<=5000?""+e.cadence:"—"));
         if(sessionState!=null)sessionState.setText(e.warning?"达到警示参考值，请降低强度":e.paused?"已暂停 · 准备好再继续":e.rest>0?"恢复中 · 剩余 "+e.rest+" 秒":!e.freshHr(now)?"心率数据缺失 · 等待设备更新":"正在训练 · 音乐 "+new int[]{88,116,136}[e.band]+" BPM");
         if(distance!=null)distance.setText(String.format(Locale.CHINA,"%.3f km",e.distance/1000)+" · "+e.distanceLabel());
-        if(groupState!=null)groupState.setText(e.confirmed+" 组已确认 · "+e.pending()+" 组待确认\n"+(e.groupStart>=0?(e.inferred?"推测组":"手动组")+"进行中 · "+(e.seconds-e.groupStart)+" 秒":"准备好，再开始下一组"));
+        if(groupState!=null)groupState.setText(e.confirmed+" 组已确认 · "+e.pending()+" 组待确认\n"+(e.groupStart>=0?(e.inferred?"推测组":"手动组")+" · 开始于 "+time(e.groupStart):"准备好，再开始下一组"));
         if(pauseButton!=null)pauseButton.setText(e.paused?"继续训练":"暂停训练");
         if(groupButton!=null){groupButton.setText(e.groupStart<0?"开始本组":"完成本组");groupButton.setEnabled(!e.paused&&e.rest==0);groupButton.setAlpha(e.paused||e.rest>0?.45f:1f);}
         if(restClock!=null)restClock.setText(time(e.rest));

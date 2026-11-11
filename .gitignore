@@ -4,3 +4,5 @@
 /private/
 *.keystore
 *.jks
+
+/tests/robolectric/target/

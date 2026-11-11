@@ -39,3 +39,7 @@ bash scripts/build.sh
 ## 模拟器内界面回归
 
 安装新版APK后设置与构建相同的环境变量以及 `ADB`，运行 `TEST_RUNNER=UiRunner bash scripts/device-test.sh`。测试通过Android UiAutomation注入触摸事件，检查真实页面跳转、表单、三场景训练、休息、组确认和报告删除，并将截图写入设备应用的外部文件目录 `ui-validation/`。这只验证模拟器交互，不替代实体设备测试。运行 `TEST_RUNNER=FlowRunner bash scripts/device-test.sh` 复核服务与报告流程。脚本会把失败或没有通过结果的测试作为失败退出。
+
+## 本轮界面模拟与预览
+
+构建APK后，设置JAVA_HOME、ANDROID_JAR、BUILD_TOOLS及Maven可执行路径（可选PULSE_MVN），运行 `bash scripts/framework-test.sh`。该脚本下载固定版本依赖，执行Android9框架控件回归，以及Android14框架/Skia原生界面渲染；首次需要联网下载测试依赖，应用本身没有网络权限。测试记录和未通过的整机项目详见 [TESTING.md](TESTING.md)。这轮交付在独立分支的 `deliverables/1.1.1/`，不自动发布Release。
