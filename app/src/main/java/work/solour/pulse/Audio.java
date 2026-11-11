@@ -14,7 +14,7 @@ public class Audio {
     TextToSpeech tts;
     boolean ready=false,focus=false,duck=false,talking=false,music=true;
     volatile boolean closed=false;
-    int selected=0;
+    int selected=0;final Map<String,Runnable> onCompleted=new HashMap<>();
     public String ttsStatus="正在检查离线中文语音", musicStatus="离线音乐加载中";
     AudioFocusRequest req;
 
@@ -30,8 +30,8 @@ public class Audio {
         });
         tts.setOnUtteranceProgressListener(new UtteranceProgressListener(){
             public void onStart(String id){s.h.post(()->talking=true);}
-            public void onDone(String id){s.h.post(()->talking=false);}
-            public void onError(String id){s.h.post(()->talking=false);}
+            public void onDone(String id){s.h.post(()->{talking=false;Runnable callback=onCompleted.remove(id);if(!closed&&callback!=null)callback.run();});}
+            public void onError(String id){s.h.post(()->{talking=false;onCompleted.remove(id);});}
         });
         Thread loader=new Thread(()->{
             int loaded=0;
@@ -44,7 +44,7 @@ public class Audio {
                     final MediaPlayer prepared=p;s.h.post(()->{if(closed)prepared.release();else players[index]=prepared;});loaded++;
                 }catch(Exception e){if(p!=null)p.release();}
             }
-            final int count=loaded;s.h.post(()->{if(!closed)musicStatus=count==3?"三档离线音乐已就绪":count==0?"音乐暂不可用，训练可继续":"部分音乐加载失败，训练可继续";});
+            final int count=loaded;s.h.post(()->{if(!closed)musicStatus=count==3?"三档离线音乐已就绪":count==0?"音乐暂不可用，可稍后重试":"部分音乐加载失败，可稍后重试";});
         },"pulse-music-loader");loader.setDaemon(true);loader.start();
         req=new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).setAudioAttributes(new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).build()).setOnAudioFocusChangeListener(change->s.h.post(()->{
             if(change==AudioManager.AUDIOFOCUS_GAIN){focus=true;duck=false;}
@@ -60,13 +60,14 @@ public class Audio {
             float target=focus&&music&&!s.e.paused&&s.e.running&&selected==i?scale:0;
             volumes[i]+=Math.max(-.065f,Math.min(.065f,target-volumes[i]));MediaPlayer p=players[i];
             if(p!=null)try{p.setVolume(volumes[i],volumes[i]);if(focus&&s.e.running&&!s.e.paused&&!p.isPlaying())p.start();if((!focus||s.e.paused||!s.e.running)&&p.isPlaying())p.pause();}
-            catch(IllegalStateException ex){players[i]=null;p.release();musicStatus="音乐播放中断，训练可继续";}
+            catch(IllegalStateException ex){players[i]=null;p.release();musicStatus="音乐播放中断，可稍后重试";}
         }
         s.h.postDelayed(this,100);
     }};
     void request(){focus=manager.requestAudioFocus(req)==AudioManager.AUDIOFOCUS_REQUEST_GRANTED;}
     void update(){selected=s.e.band;}
-    public void say(String text,boolean urgent){if(!ready||!focus||closed)return;tts.setSpeechRate(s.style==1?1.08f:s.style==2?.98f:.88f);tts.speak(text,urgent?TextToSpeech.QUEUE_FLUSH:TextToSpeech.QUEUE_ADD,null,UUID.randomUUID().toString());}
+    public void say(String text,boolean urgent){if(!ready||!focus||closed)return;if(urgent)onCompleted.clear();tts.setSpeechRate(s.style==1?1.08f:s.style==2?.98f:.88f);tts.speak(text,urgent?TextToSpeech.QUEUE_FLUSH:TextToSpeech.QUEUE_ADD,null,UUID.randomUUID().toString());}
+    public boolean previewSpeech(String text,Runnable done){if(!ready||!focus||closed)return false;onCompleted.clear();String id=UUID.randomUUID().toString();onCompleted.put(id,done);tts.setSpeechRate(.98f);int result=tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);if(result==TextToSpeech.ERROR){onCompleted.remove(id);return false;}return true;}
     public String encouragement(){return s.style==1?"节奏很棒，稳住，我们一起完成！":s.style==2?"保持可控的强度，关注呼吸与动作。":"你已经做得很好，按自己的节奏来。";}
-    void close(){closed=true;s.h.removeCallbacks(fader);tts.stop();tts.shutdown();for(MediaPlayer p:players)if(p!=null)p.release();manager.abandonAudioFocusRequest(req);}
+    void close(){closed=true;onCompleted.clear();s.h.removeCallbacks(fader);tts.stop();tts.shutdown();for(MediaPlayer p:players)if(p!=null)p.release();manager.abandonAudioFocusRequest(req);}
 }

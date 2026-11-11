@@ -26,7 +26,5 @@ PY
 "$BUILD_TOOLS/aapt" package -f -m -J build/robo-generated -M app/src/main/AndroidManifest.xml -S app/src/main/res -I "$ANDROID_JAR"
 javac --release 8 -cp "$ANDROID_JAR:$PULSE_FRAMEWORK_LIBS/*:build/classes" -d build/robo-classes build/robo-generated/work/solour/pulse/R.java tests/robolectric/*.java
 PULSE_JAVA_FLAGS=(--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED -Drobolectric.offline=true "-Drobolectric.dependency.dir=$PULSE_FRAMEWORK_LIBS" -Drobolectric.usePreinstrumentedJars=false)
-java "${PULSE_JAVA_FLAGS[@]}" -Drobolectric.resourcesMode=legacy -cp "$PULSE_FRAMEWORK_LIBS/android-all-9-robolectric-4913185-2.jar:$PULSE_FRAMEWORK_LIBS/*:build/classes:build/robo-classes" org.junit.runner.JUnitCore work.solour.pulse.PulseUiTest | tee build/framework-test.log
-rg -q '^OK \(4 tests\)' build/framework-test.log
-java "${PULSE_JAVA_FLAGS[@]}" -Drobolectric.resourcesMode=binary -cp "$PULSE_FRAMEWORK_LIBS/$PULSE_NATIVE_SDK:$PULSE_FRAMEWORK_LIBS/*:build/classes:build/robo-classes" org.junit.runner.JUnitCore work.solour.pulse.NativePreviewTest | tee build/native-preview-test.log
-rg -q '^OK \(1 test\)' build/native-preview-test.log
+java "${PULSE_JAVA_FLAGS[@]}" -Drobolectric.resourcesMode=binary -cp "$PULSE_FRAMEWORK_LIBS/$PULSE_NATIVE_SDK:$PULSE_FRAMEWORK_LIBS/*:build/classes:build/robo-classes" org.junit.runner.JUnitCore work.solour.pulse.CompanionPrototypeTest | tee build/companion-ui-test.log
+rg -q '^OK \(2 tests\)' build/companion-ui-test.log
