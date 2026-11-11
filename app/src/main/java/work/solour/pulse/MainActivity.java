@@ -157,7 +157,7 @@ public class MainActivity extends Activity {
     void startSession(){
         if(s.e.running){training();return;}
         try{s.begin(selected,demo,prefs.getInt("alert",170),rest,goal,km,prefs.getInt("style",0),manual);s.audio.music=prefs.getBoolean("music",true);observedRest=0;training();}
-        catch(Exception ex){note("暂时无法开始训练："+ex.getClass().getSimpleName()+"。请检查系统权限后重试。");}
+        catch(Exception ex){note("暂时无法开始训练，请检查系统权限与后台运行设置后重试。");}
     }
     void permissionScan(){
         String[] permissions=Build.VERSION.SDK_INT>=31?new String[]{Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_CONNECT}:new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
@@ -300,7 +300,7 @@ public class MainActivity extends Activity {
     void reportOptions(){page("report_options","报告选项",()->showReport(currentReport),null);label(body,"报告只保存在当前设备，删除后无法恢复。",15,MUTED);button(footer,"delete_report","删除这份报告",false,()->new AlertDialog.Builder(this).setTitle("删除这份报告？").setMessage("此操作无法撤销。").setPositiveButton("删除",(d,w)->deleteReport()).setNegativeButton("取消",null).show());}
     String key(JSONObject r){return r.optString("id",r.optLong("date")+":"+r.optString("scene"));}
     void deleteReport(){
-        saving=true;String id=key(currentReport);io.execute(()->{try{JSONArray all=s.reports(),next=new JSONArray();for(int i=0;i<all.length();i++){JSONObject r=all.optJSONObject(i);if(r!=null&&!key(r).equals(id))next.put(r);}s.save(next);ui.post(()->{saving=false;if(!isFinishing())history();});}catch(Exception ex){ui.post(()->{saving=false;note("删除失败，请稍后重试。");});}});
+        saving=true;String id=key(currentReport);page("deleting","删除报告",null,null);label(body,"正在从本机删除这份记录…",18,INK);io.execute(()->{try{JSONArray all=s.reports(),next=new JSONArray();for(int i=0;i<all.length();i++){JSONObject r=all.optJSONObject(i);if(r!=null&&!key(r).equals(id))next.put(r);}s.save(next);ui.post(()->{saving=false;if(!isFinishing())history();});}catch(Exception ex){ui.post(()->{saving=false;reportOptions();note("删除失败，请稍后重试。");});}});
     }
     void note(String message){new AlertDialog.Builder(this).setMessage(message).setPositiveButton("知道了",null).show();}
     void updateValues(){
@@ -317,7 +317,7 @@ public class MainActivity extends Activity {
         if(restState!=null)restState.setText(e.rest==0?"恢复时间到了，准备好后手动返回。":e.paused?"训练暂停中 · 倒计时已冻结":e.restPaused?"倒计时已暂停":"放松肩膀，慢慢呼吸。");
         if(restPause!=null){restPause.setText(e.restPaused?"继续倒计时":"暂停倒计时");restPause.setEnabled(e.rest>0&&!e.paused);}
         if(deviceState!=null)deviceState.setText(s.ble.status);
-        if(scanButton!=null){boolean scanning=s.ble.status.startsWith("扫描中");scanButton.setText(scanning?"正在扫描…":"扫描附近设备");scanButton.setEnabled(!scanning);}
+        if(scanButton!=null){boolean scanning=s.ble.scanning;scanButton.setText(scanning?"正在扫描…":"扫描附近设备");scanButton.setEnabled(!scanning);}
         if(audioState!=null)audioState.setText(s.audio.ttsStatus+"\n"+s.audio.musicStatus);
         if(screen.equals("devices"))renderDevices();
     }
