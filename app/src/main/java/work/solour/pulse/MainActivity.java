@@ -259,7 +259,7 @@ public class MainActivity extends Activity {
         boolean on=s.e.running?s.audio.music:prefs.getBoolean("music",true);
         item(body,"toggle_music","离线节奏音乐",on?"已开启 · 点击关闭":"已关闭 · 点击开启",()->{boolean next=!(s.e.running?s.audio.music:prefs.getBoolean("music",true));prefs.edit().putBoolean("music",next).apply();s.audio.music=next;soundScreen(from);});
         item(body,"sound_voice","陪伴风格",styleName(),()->voiceEditor("sound_"+from));
-        LinearLayout c=card(body,PALE);audioState=label(c,s.audio.ttsStatus,14,INK);gap(c,10);label(c,"中文播报依赖系统离线中文语音包。三种风格改变措辞和语速，使用系统音色。",13,MUTED);
+        LinearLayout c=card(body,PALE);audioState=label(c,s.audio.ttsStatus+"\n"+s.audio.musicStatus,14,INK);gap(c,10);label(c,"中文播报依赖系统离线中文语音包。三种风格改变措辞和语速，使用系统音色。",13,MUTED);
         link(body,"tts_settings","打开系统语音设置 ›",()->{try{startActivity(new Intent("com.android.settings.TTS_SETTINGS"));}catch(ActivityNotFoundException ex){try{startActivity(new Intent(Settings.ACTION_SETTINGS));}catch(Exception ignored){note("此设备没有可打开的系统设置，请在手机设置中搜索文字转语音。");}}});
     }
     void voiceEditor(String back){
@@ -318,7 +318,7 @@ public class MainActivity extends Activity {
         if(restPause!=null){restPause.setText(e.restPaused?"继续倒计时":"暂停倒计时");restPause.setEnabled(e.rest>0&&!e.paused);}
         if(deviceState!=null)deviceState.setText(s.ble.status);
         if(scanButton!=null){boolean scanning=s.ble.status.startsWith("扫描中");scanButton.setText(scanning?"正在扫描…":"扫描附近设备");scanButton.setEnabled(!scanning);}
-        if(audioState!=null)audioState.setText(s.audio.ttsStatus);
+        if(audioState!=null)audioState.setText(s.audio.ttsStatus+"\n"+s.audio.musicStatus);
         if(screen.equals("devices"))renderDevices();
     }
     final Runnable refresh=new Runnable(){public void run(){if(!visible)return;if(bound){if(!s.e.running&&(screen.equals("training")||screen.equals("rest")||screen.equals("options")||screen.equals("groups"))){try{showReport(new JSONObject(s.lastReport));}catch(Exception ignored){home();}}updateValues();if(screen.equals("training")&&s.e.rest>0&&observedRest==0)restScreen();observedRest=s.e.rest;}ui.postDelayed(this,1000);}};

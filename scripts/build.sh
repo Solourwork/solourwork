@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 : "${BUILD_TOOLS:?Set BUILD_TOOLS to Android build-tools/35.0.0}"
 : "${JAVA_HOME:?Set JAVA_HOME to JDK 21}"
 export PATH="$JAVA_HOME/bin:$PATH"
+rm -rf build/classes build/test build/dex
 mkdir -p build/classes build/test build/dex dist
 javac --release 8 -d build/test app/src/main/java/work/solour/pulse/Engine.java tests/EngineTest.java
 java -cp build/test work.solour.pulse.EngineTest

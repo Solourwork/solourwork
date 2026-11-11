@@ -2,6 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 export PATH="$JAVA_HOME/bin:$PATH"
+rm -rf build/device-classes build/device-dex
 mkdir -p build/device-classes build/device-dex
 javac --release 8 -cp "$ANDROID_JAR:build/classes" -d build/device-classes tests/android/*.java
 jar cf build/device.jar -C build/device-classes .
