@@ -1,11 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="work.solour.pulse" android:versionCode="13" android:versionName="1.2.0-preview">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="work.solour.pulse.preview" android:versionCode="13" android:versionName="1.2.0-preview">
 <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="32"/>
 <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/><uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
 <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/><uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/><uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/><uses-permission android:name="android.permission.WAKE_LOCK"/>
-<application android:label="同频 PULSE" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:icon="@drawable/icon" android:supportsRtl="true">
-<activity android:name=".PulseCompanionActivity" android:exported="false" android:windowSoftInputMode="adjustResize"/>
-<activity-alias android:name=".MainActivity" android:targetActivity=".PulseCompanionActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity-alias>
-<service android:name=".SessionService" android:exported="false" android:foregroundServiceType="connectedDevice|mediaPlayback"/>
+<application android:label="PULSE 体验稿" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:icon="@drawable/icon" android:supportsRtl="true">
+<activity android:name="work.solour.pulse.PulseCompanionActivity" android:exported="true" android:windowSoftInputMode="adjustResize"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+<service android:name="work.solour.pulse.SessionService" android:exported="false" android:foregroundServiceType="connectedDevice|mediaPlayback"/>
 </application></manifest>

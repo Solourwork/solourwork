@@ -26,7 +26,7 @@ export BUILD_TOOLS=/path/to/sdk/build-tools/35.0.0
 bash scripts/build.sh
 ```
 
-输出：`dist/pulse-1.2.0-ui-preview.apk`。沿用1.1/1.1.1的签名，versionCode13，versionName1.2.0-preview。通过入口别名保留旧的MainActivity启动组件，实际目标是新的PulseCompanionActivity。旧训练UI代码保留在历史源中，不是本版启动界面。旧版报告文件不删除，新陪伴会话不保存里程或组数成绩。
+输出：`dist/pulse-1.2.0-ui-preview.apk`。同源签名，versionCode13，versionName1.2.0-preview。独立包名`work.solour.pulse.preview`，可与旧版并存，不覆盖或读写旧版数据。默认启动PulseCompanionActivity；历史训练UI不参与本版启动，新陪伴会话不保存里程或组数成绩。
 
 ## UI 与策略验证
 
