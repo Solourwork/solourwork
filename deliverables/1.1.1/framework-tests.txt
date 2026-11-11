@@ -1,0 +1,8 @@
+JUnit version 4.13.2
+...Timer sample: seconds=3, paused=false
+.FRAMEWORK UI COUNTS: 373 checks, 140 control actions across 4 scenarios
+
+Time: 19.571
+
+OK (4 tests)
+

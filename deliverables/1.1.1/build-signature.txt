@@ -1,0 +1,28 @@
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+PASS 35 algorithm and session-flow assertions
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+3 warnings
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=PULSE Android, O=Solourwork
+Signer #1 certificate SHA-256 digest: c5d789b8aed7093ac13fa8b6aabe97775c6c9914360e3740ec1fcfcd024ad1fa
+Signer #1 certificate SHA-1 digest: 5ee5ff64f05f2702d3950c031629b8742f0e8b97
+Signer #1 certificate MD5 digest: ffc447a6307c9e8b679a0f8925564f24
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 3072
+Signer #1 public key SHA-256 digest: ad3d2cd9ea14aa544421e379a3de1a0114f69f00b892103c30a36bb2ed8c3298
+Signer #1 public key SHA-1 digest: 5f48a263ddf01f415f568362a19ba046685325cb
+Signer #1 public key MD5 digest: b8cd703e2094abe8fc7ffa0ac4e4e8a3

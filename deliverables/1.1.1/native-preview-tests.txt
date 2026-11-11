@@ -1,0 +1,7 @@
+JUnit version 4.13.2
+.NATIVE FRAMEWORK PREVIEWS: 11 screens rendered; foreground media/device type conditions checked
+
+Time: 15.972
+
+OK (1 test)
+
